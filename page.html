@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+
+  <script>
+    let i = 0;
+    let curr = "/";
+    let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
+
+    function getId() {
+      return Math.floor(Math.random() * 999999999) + 10;
+    }
+
+    function nextTrackURL(track_id) {
+      let temp = "https://api-v2.soundcloud.com/tracks/";
+      temp = temp.concat(track_id.toString());
+      temp = temp.concat('?client_id=MS6eQWZ2N3pzqid7M5U6rpiwvPzYqaNF');
+      return temp;
+    }
+
+    function next() {
+      let n = nextTrackURL(getId());
+      document.getElementById("track").href = n;
+      carousel[i % 10] = n;
+      i = i + 1;
+      curr = n;
+      console.log(i);
+      console.log(carousel);
+    }
+
+    function back() {
+      i = i - 1;
+      if (i === 0) i = 1;
+      curr = carousel[(i - 1) % 10];
+      document.getElementById("track").href = curr;
+      console.log(i);
+      console.log(carousel);
+    }
+
+
+    function playSound() {
+      sound.play();
+    }
+
+  </script>
+
+  <script src="/node_modules/howler/dist/howler.js"></script>
+  <script>
+    let sound = new Howl({
+      src: [curr];
+    });
+  </script>
+
+
+<a href="/" id="track"> Im a link </a> 
+<button onclick="next()"> next </button>
+<button onclick="back()"> back </button>
+<button onclick="playSound()"> play </button>
+
+
+
+</html>
