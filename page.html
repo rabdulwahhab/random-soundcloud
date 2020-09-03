@@ -10,9 +10,11 @@
     }
 
     function nextTrackURL(track_id) {
-      let temp = "https://api-v2.soundcloud.com/tracks/";
-      temp = temp.concat(track_id.toString());
-      temp = temp.concat('?client_id=MS6eQWZ2N3pzqid7M5U6rpiwvPzYqaNF');
+      //let temp = "https://api-v2.soundcloud.com/tracks/";
+      //temp = temp.concat(track_id.toString());
+      //temp = temp.concat('?client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP');
+      //temp = temp.concat('&user_id=159851876');
+      let temp = 'https://api-v2.soundcloud.com/search?q=36plain&client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP&limit=20&app_locale=en';
       return temp;
     }
 
