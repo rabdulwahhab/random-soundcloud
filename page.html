@@ -1,6 +1,11 @@
 <!DOCTYPE HTML>
-
-  <script>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Random </title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+  <script src="/node_modules/howler/dist/howler.js"> </script>
+  <script type="text/javascript"> // put this in separate file eventually
     let i = 0;
     let curr = "/";
     let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
@@ -12,7 +17,9 @@
     function nextTrackURL(track_id) {
       let temp = "https://api-v2.soundcloud.com/tracks/";
       temp = temp.concat(track_id.toString());
-      temp = temp.concat('?client_id=MS6eQWZ2N3pzqid7M5U6rpiwvPzYqaNF');
+      temp = temp.concat('?client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP');
+      //temp = temp.concat('&user_id=159851876');
+      //let temp = 'https://api-v2.soundcloud.com/search?q=36plain&client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP&limit=20&app_locale=en';
       return temp;
     }
 
@@ -35,26 +42,47 @@
       console.log(carousel);
     }
 
-
+    // TODO
     function playSound() {
-      sound.play();
     }
 
-  </script>
+    function logger(msg) {
+      console.log(msg);
+    }
 
-  <script src="/node_modules/howler/dist/howler.js"></script>
-  <script>
-    let sound = new Howl({
-      src: [curr];
+    /** jQuery starts here **/
+
+    // on page load
+    $(document).ready(() => { 
+      alert("Hi, this is jQuery");
+
+      $("#play").click(() => {
+        logger("clicked play button");
+        // TODO
+      });
+
+      $("#next").click(() => {
+        logger("clicked next button");
+        // TODO
+      });
+
+      $("#back").click(() => {
+        logger("clicked back button");
+        // TODO
+      });
+
     });
   </script>
+</head>
 
+<body>
 
 <a href="/" id="track"> Im a link </a> 
-<button onclick="next()"> next </button>
-<button onclick="back()"> back </button>
-<button onclick="playSound()"> play </button>
 
+<button id="next"> next </button>
+<button id="back"> back </button>
+<button id="play"> play </button>
 
+</body>
 
 </html>
