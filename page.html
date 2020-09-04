@@ -10,6 +10,10 @@
     let curr = "/";
     let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
 
+    function logger(msg) {
+      logger(msg);
+    }
+
     function getId() {
       return Math.floor(Math.random() * 999999999) + 10;
     }
@@ -25,29 +29,27 @@
 
     function next() {
       let n = nextTrackURL(getId());
-      document.getElementById("track").href = n;
+      //document.getElementById("track").href = n;
       carousel[i % 10] = n;
       i = i + 1;
       curr = n;
-      console.log(i);
-      console.log(carousel);
+      logger(i);
+      logger(carousel);
+      return n;
     }
 
     function back() {
       i = i - 1;
       if (i === 0) i = 1;
       curr = carousel[(i - 1) % 10];
-      document.getElementById("track").href = curr;
-      console.log(i);
-      console.log(carousel);
+      //document.getElementById("track").href = curr;
+      logger(i);
+      logger(carousel);
+      return curr;
     }
 
     // TODO
     function playSound() {
-    }
-
-    function logger(msg) {
-      console.log(msg);
     }
 
     /** jQuery starts here **/
