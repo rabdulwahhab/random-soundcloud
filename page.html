@@ -1,5 +1,22 @@
 <!DOCTYPE HTML>
-
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Random </title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+  <script src="/node_modules/howler/dist/howler.js"> </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      alert('Hi, this is jQuery');
+      const play_button = $("play");
+      $('#play').click(function () {
+        alert('CLICKED!');
+        console.log('CLICKED!');
+      })
+    });
+  </script>
+</head>
+<!--
   <script>
     let i = 0;
     let curr = "/";
@@ -10,11 +27,11 @@
     }
 
     function nextTrackURL(track_id) {
-      //let temp = "https://api-v2.soundcloud.com/tracks/";
-      //temp = temp.concat(track_id.toString());
-      //temp = temp.concat('?client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP');
+      let temp = "https://api-v2.soundcloud.com/tracks/";
+      temp = temp.concat(track_id.toString());
+      temp = temp.concat('?client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP');
       //temp = temp.concat('&user_id=159851876');
-      let temp = 'https://api-v2.soundcloud.com/search?q=36plain&client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP&limit=20&app_locale=en';
+      //let temp = 'https://api-v2.soundcloud.com/search?q=36plain&client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP&limit=20&app_locale=en';
       return temp;
     }
 
@@ -37,26 +54,20 @@
       console.log(carousel);
     }
 
-
     function playSound() {
       sound.play();
     }
 
   </script>
+-->
 
-  <script src="/node_modules/howler/dist/howler.js"></script>
-  <script>
-    let sound = new Howl({
-      src: [curr];
-    });
-  </script>
-
+<body>
 
 <a href="/" id="track"> Im a link </a> 
 <button onclick="next()"> next </button>
 <button onclick="back()"> back </button>
-<button onclick="playSound()"> play </button>
+<button id="play"> play </button>
 
-
+</body>
 
 </html>
