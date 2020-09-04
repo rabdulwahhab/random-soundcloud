@@ -5,19 +5,7 @@
   <title> Random </title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
   <script src="/node_modules/howler/dist/howler.js"> </script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      alert('Hi, this is jQuery');
-      const play_button = $("play");
-      $('#play').click(function () {
-        alert('CLICKED!');
-        console.log('CLICKED!');
-      })
-    });
-  </script>
-</head>
-<!--
-  <script>
+  <script type="text/javascript"> // put this in separate file eventually
     let i = 0;
     let curr = "/";
     let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
@@ -54,18 +42,45 @@
       console.log(carousel);
     }
 
+    // TODO
     function playSound() {
-      sound.play();
     }
 
+    function logger(msg) {
+      console.log(msg);
+    }
+
+    /** jQuery starts here **/
+
+    // on page load
+    $(document).ready(() => { 
+      alert("Hi, this is jQuery");
+
+      $("#play").click(() => {
+        logger("clicked play button");
+        // TODO
+      });
+
+      $("#next").click(() => {
+        logger("clicked next button");
+        // TODO
+      });
+
+      $("#back").click(() => {
+        logger("clicked back button");
+        // TODO
+      });
+
+    });
   </script>
--->
+</head>
 
 <body>
 
 <a href="/" id="track"> Im a link </a> 
-<button onclick="next()"> next </button>
-<button onclick="back()"> back </button>
+
+<button id="next"> next </button>
+<button id="back"> back </button>
 <button id="play"> play </button>
 
 </body>
