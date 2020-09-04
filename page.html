@@ -72,7 +72,7 @@
 
     // on page load
     $(document).ready(() => { 
-      alert("Hi, this is jQuery");
+      alert("Hi, jQuery is enabled");
 
       $("#play").click(() => {
         logger("clicked play button");
@@ -91,7 +91,7 @@
             logger("404 error --- No track at that url");
           } else {
             const obj = JSON.parse(xhr.responseText);
-            //logger(obj);
+            logger(obj);
           }
         };
 
