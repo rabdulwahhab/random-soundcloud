@@ -79,17 +79,27 @@
         // TODO
       });
 
+      // TODO pull out lambda to const and recurse when 404 error
       $("#next").click(() => {
         logger("clicked next button");
         // TODO
         prepareAPIRequest();
-        xhr.onload = function () { // the callback triggered on circumstance
-          logger(
-            xhr.status + ' ' + xhr.statusText + '\n\n' +
-            (xhr.responseText || '')
-          );
+
+        xhr.onload = () => { // the callback triggered on circumstance
+          //logger("STATUS is " + xhr.status);
+          if (xhr.status === 404) {
+            logger("404 error --- No track at that url");
+          } else {
+            const obj = JSON.parse(xhr.responseText);
+            //logger(obj);
+          }
         };
-        xhr.onerror = // TODO
+
+        // TODO
+        xhr.onerror = () => {
+          logger("XHR failed --- This is very bad!!");
+        }
+
         xhr.send();
       });
 
