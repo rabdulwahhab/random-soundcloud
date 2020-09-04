@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
   <title> Random </title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
   <script src="/node_modules/howler/dist/howler.js"> </script>
@@ -9,6 +10,8 @@
     let i = 0;
     let curr = "/";
     let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
+    var cors_api_url = "https://cors-anywhere.herokuapp.com/";
+    var xhr = new XMLHttpRequest(); // builtin browser object to make requests
 
     function logger(msg) {
       console.log(msg);
@@ -54,6 +57,16 @@
       return curr;
     }
 
+    // Reload (mutate) XMLHTTP obj with next track
+    function prepareAPIRequest() {
+      const api_url = next();
+      const options = {
+        method: "GET",
+        url: api_url,
+      }
+      xhr.open(options.method, cors_api_url + options.url); // specify the request
+    }
+
     function playSound() {
       // TODO
     }
@@ -72,8 +85,15 @@
       $("#next").click(() => {
         logger("clicked next button");
         // TODO
-        const url = next();
-        logger($.getJSON(url));
+        prepareAPIRequest();
+        xhr.onload = function () { // the callback triggered on circumstance
+          logger(
+            xhr.status + ' ' + xhr.statusText + '\n\n' +
+            (xhr.responseText || '')
+          );
+        };
+        xhr.onerror = // TODO
+        xhr.send();
       });
 
       $("#back").click(() => {
