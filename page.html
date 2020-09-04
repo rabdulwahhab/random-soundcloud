@@ -11,7 +11,7 @@
     let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
 
     function logger(msg) {
-      logger(msg);
+      console.log(msg);
     }
 
     function getId() {
@@ -31,6 +31,7 @@
       return temp;
     }
 
+    // Returns next random track api url
     function next() {
       let n = nextTrackURL(getId());
       //document.getElementById("track").href = n;
@@ -42,6 +43,7 @@
       return n;
     }
 
+    // Returns previous track api url from cache
     function back() {
       i = i - 1;
       if (i === 0) i = 1;
@@ -52,8 +54,8 @@
       return curr;
     }
 
-    // TODO
     function playSound() {
+      // TODO
     }
 
     /** jQuery starts here **/
@@ -70,6 +72,8 @@
       $("#next").click(() => {
         logger("clicked next button");
         // TODO
+        const url = next();
+        logger($.getJSON(url));
       });
 
       $("#back").click(() => {
