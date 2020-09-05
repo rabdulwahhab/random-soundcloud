@@ -9,7 +9,7 @@
     <script src="/node_modules/howler/dist/howler.js"></script>
     <script type="text/javascript">
         // put this in separate file eventually
-        let i = 0;
+        let i = -1;
         let carousel = [null, null, null, null, null, null, null, null, null, null];
         /* Many thanks: https://github.com/Rob--W/cors-anywhere */
         var cors_api_url = "https://cors-anywhere.herokuapp.com/";
@@ -38,15 +38,15 @@
         // Updates carousel to keep consistent state (cache + current track index)
         function next(trackObj) {
             logger(i);
-            carousel[i % 10] = trackObj;
             i = (i + 1) % 10;
+            carousel[i] = trackObj;
             logger(carousel);
         }
 
         // Returns previous track JSON obj from cache and updates state (current track index)
         function back() {
-            if (i <= 0) i = 1;
             i = i - 1;
+            if (i <= 0) i = 0;
             logger(i);
             logger(carousel);
             return carousel[i % 10];
