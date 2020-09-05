@@ -15,6 +15,7 @@
         /* Many thanks: https://github.com/Rob--W/cors-anywhere */
         var cors_api_url = "https://cors-anywhere.herokuapp.com/";
         const MAX_DURATION = 6 // in minutes
+        MAX_PLAYS = 100000;
 
         function logger(msg) {
             console.log(msg);
@@ -98,18 +99,20 @@
                     const plays = obj.playback_count;
                     const permalink_url = obj.permalink_url;
                     const sharing = obj.sharing;
-                    logger(title);
-                    logger(artist);
-                    logger(duration);
-                    logger(plays);
-                    logger(permalink_url);
-                    logger(sharing);
+                    logger("Title: " + title);
+                    logger("Artist: " + artist);
+                    logger("Duration: " + duration);
+                    logger("Plays: " + plays);
+                    logger("URL: " + permalink_url);
+                    logger("Share permissions: " + sharing);
                     // TODO check pass criteria else return recursive call here
-                    /*if (passCriteria(duration, plays, sharing)) {
-                        updateDomCallback(title, permalink_url, artist);
+                    if (passCriteria(duration, plays, sharing)) {
+                        logger("YES!");
+                        //updateDomCallback(title, permalink_url, artist);
                     } else {
+                        logger("NO!");
                         // TODO recurse
-                    }*/
+                    }
                 }
             };
 
