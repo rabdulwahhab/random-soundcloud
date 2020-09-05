@@ -90,6 +90,7 @@
           if (xhr.status === 404) {
             logger("404 error --- No track at that url");
           } else {
+            logger('HERE');
             const obj = JSON.parse(xhr.responseText);
             logger(obj);
           }
@@ -113,13 +114,13 @@
 </head>
 
 <body>
-
-<a href="/" id="track"> Im a link </a> 
-
-<button id="next"> next </button>
-<button id="back"> back </button>
-<button id="play"> play </button>
-
+  <div class="center">
+    <h3 id="title"> "" </h3>
+    <h4> <a href="/" id="track"> Im a link </a> </h4>
+    <button id="back"> back </button>
+    <button id="next"> next </button>
+    <button id="play"> play </button>
+  </div>
 </body>
 
 </html>
