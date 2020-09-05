@@ -45,11 +45,11 @@
 
         // Returns previous track JSON obj from cache and updates state (current track index)
         function back() {
+            if (i <= 0) i = 1;
             i = i - 1;
             logger(i);
-            if (i === 0) i = 1;
             logger(carousel);
-            return carousel[(i - 1) % 10];
+            return carousel[i % 10];
         }
 
         // Return loaded XMLHTTP obj with next random track url
@@ -149,8 +149,6 @@
                 logger("clicked next button");
                 logger("HERE");
                 getNextTrack(updateDom);
-                //logger(next); // if this is undef then it's getting the return val from the successful req
-                // and not the onload func
             });
 
             // Handle back button
@@ -158,10 +156,12 @@
                 logger("clicked back button");
                 // TODO check if works properly
                 const obj = back(); // Return prev track obj (effect: update current index state)
-                const title = obj.title;
-                const artist = obj.user.username;
-                const permalink_url = obj.permalink_url;
-                updateDom(title, permalink_url, artist);
+                if (obj) {
+                    const title = obj.title;
+                    const artist = obj.user.username;
+                    const permalink_url = obj.permalink_url;
+                    updateDom(title, permalink_url, artist);
+                }
             });
         });
     </script>
