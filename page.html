@@ -14,6 +14,7 @@
         let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
         /* Many thanks: https://github.com/Rob--W/cors-anywhere */
         var cors_api_url = "https://cors-anywhere.herokuapp.com/";
+        const MAX_DURATION = 6 // in minutes
 
         function logger(msg) {
             console.log(msg);
@@ -71,8 +72,12 @@
             // TODO
         }
 
+        function passCriteria(duration, plays, sharing) {
+            return (duration <= MAX_DURATION) && (plays <= MAX_PLAYS) && (sharing === "public");
+        }
+
         // Returns next random track JSON obj or undef if failed (rare)
-        function getNextTrack() {
+        function getNextTrack(updateDomCallback) {
             // TODO
             const xhr = prepareAPIRequest();
 
@@ -86,19 +91,34 @@
                     // Found track
                     logger("FOUND");
                     const obj = JSON.parse(xhr.responseText);
-                    // TODO check pass criteria else return recursive call here
                     logger(obj);
-                    return obj;
+                    const title = obj.title;
+                    const artist = obj.user.username;
+                    const duration = (Math.round(obj.duration / 1000 / 60));
+                    const plays = obj.playback_count;
+                    const permalink_url = obj.permalink_url;
+                    const sharing = obj.sharing;
+                    logger(title);
+                    logger(artist);
+                    logger(duration);
+                    logger(plays);
+                    logger(permalink_url);
+                    logger(sharing);
+                    // TODO check pass criteria else return recursive call here
+                    /*if (passCriteria(duration, plays, sharing)) {
+                        updateDomCallback(title, permalink_url, artist);
+                    } else {
+                        // TODO recurse
+                    }*/
                 }
             };
 
             // TODO
             xhr.onerror = () => {
                 logger("XHR failed --- This is very bad!!");
-                return undefined;
             };
 
-            // This is by default async. returns as soon as req is sent
+            // This is by default async. returns (undef) as soon as req is sent
             xhr.send();
         }
 
@@ -116,9 +136,13 @@
             // TODO pull out lambda to const and recurse when 404 error
             $("#next").click(async () => {
                 logger("clicked next button");
-                const next = await getNextTrack();
                 logger("HERE");
-                logger(next); // if this is undef then it's getting the return val from the successful req
+                getNextTrack((title, permalink_url, artist) => {
+                    $("#title").text(title);
+                    $("#artist").text(artist);
+                    $("#track").attr("href", permalink_url);
+                });
+                //logger(next); // if this is undef then it's getting the return val from the successful req
                 // and not the onload func
 
                 // TODO update DOM + update carousel?
@@ -134,7 +158,8 @@
 
 <body>
 <div class="center">
-    <h3 id="title">""</h3>
+    <h2 id="title">[title]</h2>
+    <h3 id="artist">[artist]</h3>
     <h4><a href="/" id="track"> Im a link </a></h4>
     <button id="back">back</button>
     <button id="play">play</button>
