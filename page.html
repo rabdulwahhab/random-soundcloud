@@ -10,7 +10,7 @@
     <script type="text/javascript">
         // put this in separate file eventually
         let i = 0;
-        let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
+        let carousel = [null, null, null, null, null, null, null, null, null, null];
         /* Many thanks: https://github.com/Rob--W/cors-anywhere */
         var cors_api_url = "https://cors-anywhere.herokuapp.com/";
         const MAX_DURATION = 6 // in minutes
@@ -43,7 +43,7 @@
             logger(carousel);
         }
 
-        // Returns previous track JSON obje from cache and updates state (current track index)
+        // Returns previous track JSON obj from cache and updates state (current track index)
         function back() {
             i = i - 1;
             logger(i);
@@ -76,7 +76,6 @@
         // Sets callbacks to fire for appropriate response.
         // Returns undef on success.
         function getNextTrack(updateDomCallback) {
-            // TODO
             const xhr = prepareAPIRequest();
 
             // gets called as soon as the req completes successfully
@@ -85,6 +84,8 @@
                 if (xhr.status === 404) {
                     logger("404 error --- No track at that url");
                     getNextTrack(updateDomCallback);
+                } else if (xhr.status !== 200) {
+                    logger(xhr.status + " error --- " + xhr.responseText);
                 } else {
                     // Found track
                     logger("FOUND");
@@ -131,36 +132,36 @@
         $(document).ready(() => {
             alert("Hi, jQuery is enabled");
 
+            // Handle play button
             $("#play").click(() => {
                 logger("clicked play button");
                 // TODO
             });
 
-            // const updateDom = (title, permalink_url, artist) => {
-            //     $("#title").text(title);
-            //     $("#artist").text(artist);
-            //     $("#track").attr("href", permalink_url);
-            // };
+            const updateDom = (title, permalink_url, artist) => {
+                $("#title").text(title);
+                $("#artist").text(artist);
+                $("#track").attr("href", permalink_url);
+            };
 
-            // TODO pull out lambda to const and recurse when 404 error
+            // Handle forward button
             $("#next").click(async () => {
                 logger("clicked next button");
                 logger("HERE");
-                getNextTrack((title, permalink_url, artist) => {
-                    $("#title").text(title);
-                    $("#artist").text(artist);
-                    $("#track").attr("href", permalink_url);
-                });
+                getNextTrack(updateDom);
                 //logger(next); // if this is undef then it's getting the return val from the successful req
                 // and not the onload func
             });
 
+            // Handle back button
             $("#back").click(() => {
                 logger("clicked back button");
                 // TODO
-                // $("#title").text(title);
-                // $("#artist").text(artist);
-                // $("#track").attr("href", permalink_url);
+                const obj = back(); // Return prev track obj (effect: update current index state)
+                const title = obj.title;
+                const artist = obj.user.username;
+                const permalink_url = obj.permalink_url;
+                updateDom(title, permalink_url, artist);
             });
         });
     </script>
