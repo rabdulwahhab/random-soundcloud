@@ -10,7 +10,6 @@
     <script type="text/javascript">
         // put this in separate file eventually
         let i = 0;
-        //let curr = "/";
         let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
         /* Many thanks: https://github.com/Rob--W/cors-anywhere */
         var cors_api_url = "https://cors-anywhere.herokuapp.com/";
@@ -39,15 +38,12 @@
         // Updates carousel to keep consistent state (cache + current track index)
         function next(trackObj) {
             logger(i);
-            //let n = nextTrackURL(getId());
             carousel[i % 10] = trackObj;
             i = (i + 1) % 10;
-            //curr = n;
             logger(carousel);
-            //return n;
         }
 
-        // Returns previous track api url from cache and updates state (current track index)
+        // Returns previous track JSON obje from cache and updates state (current track index)
         function back() {
             i = i - 1;
             logger(i);
@@ -76,7 +72,9 @@
             return public_t && (duration <= MAX_DURATION) && (plays <= MAX_PLAYS);
         }
 
-        // Returns next random track JSON obj or undef if failed (rare)
+        // Sends req for next random track JSON obj from SC api.
+        // Sets callbacks to fire for appropriate response.
+        // Returns undef on success.
         function getNextTrack(updateDomCallback) {
             // TODO
             const xhr = prepareAPIRequest();
@@ -84,7 +82,6 @@
             // gets called as soon as the req completes successfully
             xhr.onload = () => {
                 // the callback triggered on circumstance
-                //logger("STATUS is " + xhr.status);
                 if (xhr.status === 404) {
                     logger("404 error --- No track at that url");
                     getNextTrack(updateDomCallback);
@@ -107,14 +104,14 @@
                     logger("Plays: " + plays);
                     logger("URL: " + permalink_url);
                     logger("Public: " + public_t);
-                    // TODO check pass criteria else return recursive call here
+
+                    // check pass criteria else recurse
                     if (passCriteria(duration, plays, public_t)) {
                         logger("YES!");
                         updateDomCallback(title, permalink_url, artist);
                     } else {
                         logger("NO!");
                         getNextTrack(updateDomCallback);
-                        // TODO recurse
                     }
                 }
             };
