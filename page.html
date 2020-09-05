@@ -89,7 +89,6 @@
                     // Found track
                     logger("FOUND");
                     const obj = JSON.parse(xhr.responseText);
-                    next(obj); // update state
                     logger(obj);
                     const title = obj.title;
                     const artist = obj.user.username;
@@ -108,6 +107,7 @@
                     // check pass criteria else recurse
                     if (passCriteria(duration, plays, public_t)) {
                         logger("YES!");
+                        next(obj); // update state
                         updateDomCallback(title, permalink_url, artist);
                     } else {
                         logger("NO!");
