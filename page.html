@@ -38,11 +38,11 @@
 
         // Returns next random track api url
         function next() {
+            logger(i);
             let n = nextTrackURL(getId());
             carousel[i % 10] = n;
-            i = i + 1;
+            i = (i + 1) % 10;
             curr = n;
-            logger(i);
             logger(carousel);
             return n;
         }
@@ -73,8 +73,8 @@
             // TODO
         }
 
-        function passCriteria(duration, plays, sharing) {
-            return (duration <= MAX_DURATION) && (plays <= MAX_PLAYS) && (sharing === "public");
+        function passCriteria(duration, plays, public_t) {
+            return public_t && (duration <= MAX_DURATION) && (plays <= MAX_PLAYS);
         }
 
         // Returns next random track JSON obj or undef if failed (rare)
@@ -98,15 +98,16 @@
                     const duration = (Math.round(obj.duration / 1000 / 60));
                     const plays = obj.playback_count;
                     const permalink_url = obj.permalink_url;
-                    const sharing = obj.sharing;
+                    const public_t = obj.public;
+
                     logger("Title: " + title);
                     logger("Artist: " + artist);
                     logger("Duration: " + duration);
                     logger("Plays: " + plays);
                     logger("URL: " + permalink_url);
-                    logger("Share permissions: " + sharing);
+                    logger("Public: " + public_t);
                     // TODO check pass criteria else return recursive call here
-                    if (passCriteria(duration, plays, sharing)) {
+                    if (passCriteria(duration, plays, public_t)) {
                         logger("YES!");
                         updateDomCallback(title, permalink_url, artist);
                     } else {
