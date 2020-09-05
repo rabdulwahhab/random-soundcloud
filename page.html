@@ -1,127 +1,144 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
-  <title> Random </title>
-  <link rel="stylesheet" href="./resources/style/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
-  <script src="/node_modules/howler/dist/howler.js"> </script>
-  <script type="text/javascript"> // put this in separate file eventually
-    let i = 0;
-    let curr = "/";
-    let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
-    /* Many thanks: https://github.com/Rob--W/cors-anywhere */
-    var cors_api_url = "https://cors-anywhere.herokuapp.com/";
-    var xhr = new XMLHttpRequest(); // builtin browser object to make requests
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Random</title>
+    <link rel="stylesheet" href="./resources/style/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/node_modules/howler/dist/howler.js"></script>
+    <script type="text/javascript">
+        // put this in separate file eventually
+        let i = 0;
+        let curr = "/";
+        let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
+        /* Many thanks: https://github.com/Rob--W/cors-anywhere */
+        var cors_api_url = "https://cors-anywhere.herokuapp.com/";
 
-    function logger(msg) {
-      console.log(msg);
-    }
-
-    function getId() {
-      return Math.floor(Math.random() * 999999999) + 10;
-    }
-
-    function getClientID() {
-      // TODO refresh by interval
-    }
-
-    function nextTrackURL(track_id) {
-      let temp = "https://api-v2.soundcloud.com/tracks/";
-      temp = temp.concat(track_id.toString());
-      temp = temp.concat('?client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP');
-      return temp;
-    }
-
-    // Returns next random track api url
-    function next() {
-      let n = nextTrackURL(getId());
-      carousel[i % 10] = n;
-      i = i + 1;
-      curr = n;
-      logger(i);
-      logger(carousel);
-      return n;
-    }
-
-    // Returns previous track api url from cache
-    function back() {
-      i = i - 1;
-      if (i === 0) i = 1;
-      curr = carousel[(i - 1) % 10];
-      logger(i);
-      logger(carousel);
-      return curr;
-    }
-
-    // Reload (mutate) XMLHTTP obj with next track
-    function prepareAPIRequest() {
-      const api_url = next();
-      const options = {
-        method: "GET",
-        url: api_url,
-      }
-      xhr.open(options.method, cors_api_url + options.url); // specify the request
-    }
-
-    function playSound() {
-      // TODO
-    }
-
-    /** jQuery starts here **/
-
-    // on page load
-    $(document).ready(() => { 
-      alert("Hi, jQuery is enabled");
-
-      $("#play").click(() => {
-        logger("clicked play button");
-        // TODO
-      });
-
-      // TODO pull out lambda to const and recurse when 404 error
-      $("#next").click(() => {
-        logger("clicked next button");
-        // TODO
-        prepareAPIRequest();
-
-        xhr.onload = () => { // the callback triggered on circumstance
-          //logger("STATUS is " + xhr.status);
-          if (xhr.status === 404) {
-            logger("404 error --- No track at that url");
-          } else {
-            logger('HERE');
-            const obj = JSON.parse(xhr.responseText);
-            logger(obj);
-          }
-        };
-
-        // TODO
-        xhr.onerror = () => {
-          logger("XHR failed --- This is very bad!!");
+        function logger(msg) {
+            console.log(msg);
         }
 
-        xhr.send();
-      });
+        function getId() {
+            return Math.floor(Math.random() * 999999999) + 10;
+        }
 
-      $("#back").click(() => {
-        logger("clicked back button");
-        // TODO
-      });
+        function getClientID() {
+            // TODO refresh by interval
+        }
 
-    });
-  </script>
+        function nextTrackURL(track_id) {
+            let temp = "https://api-v2.soundcloud.com/tracks/";
+            temp = temp.concat(track_id.toString());
+            temp = temp.concat("?client_id=yBT1d8kK7at5QuM6ik9RFcvPvDTi4xyP");
+            return temp;
+        }
+
+        // Returns next random track api url
+        function next() {
+            let n = nextTrackURL(getId());
+            carousel[i % 10] = n;
+            i = i + 1;
+            curr = n;
+            logger(i);
+            logger(carousel);
+            return n;
+        }
+
+        // Returns previous track api url from cache
+        function back() {
+            i = i - 1;
+            if (i === 0) i = 1;
+            curr = carousel[(i - 1) % 10];
+            logger(i);
+            logger(carousel);
+            return curr;
+        }
+
+        // Return loaded XMLHTTP obj with next random track url
+        function prepareAPIRequest() {
+            const api_url = next();
+            const options = {
+                method: "GET",
+                url: api_url,
+            };
+            var xhr = new XMLHttpRequest(); // builtin browser object to make requests
+            xhr.open(options.method, cors_api_url + options.url); // specify the request
+            return xhr;
+        }
+
+        function playSound() {
+            // TODO
+        }
+
+        // Returns next random track JSON obj or undef if failed (rare)
+        function getNextTrack() {
+            // TODO
+            const xhr = prepareAPIRequest();
+
+            // gets called as soon as the req completes successfully
+            xhr.onload = () => {
+                // the callback triggered on circumstance
+                //logger("STATUS is " + xhr.status);
+                if (xhr.status === 404) {
+                    logger("404 error --- No track at that url");
+                } else {
+                    // Found track
+                    logger("FOUND");
+                    const obj = JSON.parse(xhr.responseText);
+                    // TODO check pass criteria else return recursive call here
+                    logger(obj);
+                    return obj;
+                }
+            };
+
+            // TODO
+            xhr.onerror = () => {
+                logger("XHR failed --- This is very bad!!");
+                return undefined;
+            };
+
+            // This is by default async. returns as soon as req is sent
+            xhr.send();
+        }
+
+        /** jQuery starts here **/
+
+        // on page load
+        $(document).ready(() => {
+            alert("Hi, jQuery is enabled");
+
+            $("#play").click(() => {
+                logger("clicked play button");
+                // TODO
+            });
+
+            // TODO pull out lambda to const and recurse when 404 error
+            $("#next").click(async () => {
+                logger("clicked next button");
+                const next = await getNextTrack();
+                logger("HERE");
+                logger(next); // if this is undef then it's getting the return val from the successful req
+                // and not the onload func
+
+                // TODO update DOM + update carousel?
+            });
+
+            $("#back").click(() => {
+                logger("clicked back button");
+                // TODO
+            });
+        });
+    </script>
 </head>
 
 <body>
-  <div class="center">
-    <h3 id="title"> "" </h3>
-    <h4> <a href="/" id="track"> Im a link </a> </h4>
-    <button id="back"> back </button>
-    <button id="next"> next </button>
-    <button id="play"> play </button>
-  </div>
+<div class="center">
+    <h3 id="title">""</h3>
+    <h4><a href="/" id="track"> Im a link </a></h4>
+    <button id="back">back</button>
+    <button id="play">play</button>
+    <button id="next">next</button>
+</div>
 </body>
-
 </html>
