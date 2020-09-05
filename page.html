@@ -108,7 +108,7 @@
                     // TODO check pass criteria else return recursive call here
                     if (passCriteria(duration, plays, sharing)) {
                         logger("YES!");
-                        //updateDomCallback(title, permalink_url, artist);
+                        updateDomCallback(title, permalink_url, artist);
                     } else {
                         logger("NO!");
                         // TODO recurse
@@ -163,7 +163,7 @@
 <div class="center">
     <h2 id="title">[title]</h2>
     <h3 id="artist">[artist]</h3>
-    <h4><a href="/" id="track"> Im a link </a></h4>
+    <h4><a href="/" id="track" target="_blank"> Im a link </a></h4>
     <button id="back">back</button>
     <button id="play">play</button>
     <button id="next">next</button>
