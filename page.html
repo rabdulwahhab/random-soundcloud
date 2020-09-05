@@ -65,7 +65,7 @@
         }
 
         function playSound() {
-            // TODO
+            // TODO play sound in browser
         }
 
         function passCriteria(duration, plays, public_t) {
@@ -117,7 +117,7 @@
                 }
             };
 
-            // TODO
+            // TODO handle XHR error edge case (rare)
             xhr.onerror = () => {
                 logger("XHR failed --- This is very bad!!");
             };
@@ -135,7 +135,7 @@
             // Handle play button
             $("#play").click(() => {
                 logger("clicked play button");
-                // TODO
+                // TODO play button event handling
             });
 
             const updateDom = (title, permalink_url, artist) => {
@@ -156,7 +156,7 @@
             // Handle back button
             $("#back").click(() => {
                 logger("clicked back button");
-                // TODO
+                // TODO check if works properly
                 const obj = back(); // Return prev track obj (effect: update current index state)
                 const title = obj.title;
                 const artist = obj.user.username;
