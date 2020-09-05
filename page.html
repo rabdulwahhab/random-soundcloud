@@ -88,6 +88,7 @@
                 //logger("STATUS is " + xhr.status);
                 if (xhr.status === 404) {
                     logger("404 error --- No track at that url");
+                    getNextTrack(updateDomCallback);
                 } else {
                     // Found track
                     logger("FOUND");
@@ -112,6 +113,7 @@
                         updateDomCallback(title, permalink_url, artist);
                     } else {
                         logger("NO!");
+                        getNextTrack(updateDomCallback);
                         // TODO recurse
                     }
                 }
