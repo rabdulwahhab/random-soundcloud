@@ -10,7 +10,7 @@
     <script type="text/javascript">
         // put this in separate file eventually
         let i = 0;
-        let curr = "/";
+        //let curr = "/";
         let carousel = ["/", "/", "/", "/", "/", "/", "/", "/", "/", "/"];
         /* Many thanks: https://github.com/Rob--W/cors-anywhere */
         var cors_api_url = "https://cors-anywhere.herokuapp.com/";
@@ -36,30 +36,29 @@
             return temp;
         }
 
-        // Returns next random track api url
-        function next() {
+        // Updates carousel to keep consistent state (cache + current track index)
+        function next(trackObj) {
             logger(i);
-            let n = nextTrackURL(getId());
-            carousel[i % 10] = n;
+            //let n = nextTrackURL(getId());
+            carousel[i % 10] = trackObj;
             i = (i + 1) % 10;
-            curr = n;
+            //curr = n;
             logger(carousel);
-            return n;
+            //return n;
         }
 
-        // Returns previous track api url from cache
+        // Returns previous track api url from cache and updates state (current track index)
         function back() {
             i = i - 1;
-            if (i === 0) i = 1;
-            curr = carousel[(i - 1) % 10];
             logger(i);
+            if (i === 0) i = 1;
             logger(carousel);
-            return curr;
+            return carousel[(i - 1) % 10];
         }
 
         // Return loaded XMLHTTP obj with next random track url
         function prepareAPIRequest() {
-            const api_url = next();
+            const api_url = nextTrackURL(getId());
             const options = {
                 method: "GET",
                 url: api_url,
@@ -93,6 +92,7 @@
                     // Found track
                     logger("FOUND");
                     const obj = JSON.parse(xhr.responseText);
+                    next(obj); // update state
                     logger(obj);
                     const title = obj.title;
                     const artist = obj.user.username;
@@ -139,6 +139,12 @@
                 // TODO
             });
 
+            // const updateDom = (title, permalink_url, artist) => {
+            //     $("#title").text(title);
+            //     $("#artist").text(artist);
+            //     $("#track").attr("href", permalink_url);
+            // };
+
             // TODO pull out lambda to const and recurse when 404 error
             $("#next").click(async () => {
                 logger("clicked next button");
@@ -150,13 +156,14 @@
                 });
                 //logger(next); // if this is undef then it's getting the return val from the successful req
                 // and not the onload func
-
-                // TODO update DOM + update carousel?
             });
 
             $("#back").click(() => {
                 logger("clicked back button");
                 // TODO
+                // $("#title").text(title);
+                // $("#artist").text(artist);
+                // $("#track").attr("href", permalink_url);
             });
         });
     </script>
