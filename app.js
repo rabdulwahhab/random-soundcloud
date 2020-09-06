@@ -1,17 +1,17 @@
 // import express web framework
 var express = require('express');
 var app = express();
-var radioController = require('./controllers/radioController'); // store function from module
+var controller = require('./controllers/controller'); // store function from module
 
 
 // setup ejs template engine
 app.set('view engine', 'ejs');
 
 // static files
-app.use(express.static('./public'));
+app.use(express.static(__dirname + '/public'));
 
 // fire controllers
-radioController(app);
+controller(app);
 
 // listen to port
 app.listen(8000);

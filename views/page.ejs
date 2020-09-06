@@ -1,19 +1,21 @@
-<html>
+<html lang="en">
 <head>
-    <title>Rando</title>
+    <title>Random Soundcloud</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link href="/public/resources/style/style.css" rel="stylesheet" type="text/css">
+    <script src="/assets/test.js"></script>
+    <link href="/assets/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 <div class="center">
-    <h2 id="title">[title]</h2>
-    <h3 id="artist">[artist]</h3>
-    <h4><a href="/" id="track" target="_blank"> Im a link </a></h4>
+    <h2 id="title"><%= track.title %></h2>
+    <h3 id="artist"><%= track.artist %></h3>
+    <h4><a href="<%= track.url %>" id="track_url" target="_blank"> Im a link </a></h4>
     <button id="back">back</button>
     <button id="play">play</button>
     <button id="next">next</button>
 </div>
+
 </body>
 
 </html>
