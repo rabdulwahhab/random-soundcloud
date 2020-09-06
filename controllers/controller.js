@@ -45,9 +45,6 @@ function back() {
     return carousel[i % 10];
 }
 
-// STATE
-const trackObj = {title: "Random Soundcloud Tracks", artist: "", url: ""};
-
 const test = (res) => {
     logger("Passed a function!");
     res.send('ok');
@@ -58,13 +55,14 @@ const test = (res) => {
 module.exports = function (app) {
 
     app.get('/', function (req, res) {
+        const trackObj = {title: "Random Soundcloud Tracks", artist: "", url: ""};
         res.render('page', {track: trackObj});
         // view name. auto searches in views folder which has been mapped to public
     });
 
     // TODO add handler for when client requests next track
-    app.get('/test', function (req, res) {
-       test(res);
+    app.get('/next', function (req, res) {
+       res.json({dummy: "dummy123"});
     });
 
 };
