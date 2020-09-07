@@ -9,7 +9,8 @@ const logger = util.logger;
 
 // TODO bring in processing logic here and pass output to views
 const MAX_DURATION = 6 // in minutes
-MAX_PLAYS = 100000;
+const MAX_PLAYS = 100000;
+const NUM_REQUESTS = 10; // bulk handling
 
 // function logger(msg) {
 //     console.log(msg);
@@ -42,8 +43,26 @@ function prepareAPIRequest() {
     return xhr;
 }
 
-function passCriteria(duration, plays, public_t) {
-    return public_t && (duration <= MAX_DURATION) && (plays <= MAX_PLAYS);
+// Checks if a given JSON track info obj is acceptable (not empty + selection)
+function passCriteria(trackObj) {
+    // if (scResponse) {
+    //     // TODO parse trackObj + criteria check + sauce it to client
+    //     const title = obj.title;
+    //     const artist = obj.user.username;
+    //     const duration = (Math.round(obj.duration / 1000 / 60));
+    //     const plays = obj.playback_count;
+    //     const permalink_url = obj.permalink_url;
+    //     //const public_t = obj.public;
+    //     trackObj.title = scResponse.title;
+    //     trackObj.artist = scResponse.user.username;
+    //     trackObj.url = scResponse.permalink_url;
+    //     logger("SUCCESS");
+    //     res.json(trackObj);
+    // }
+    return trackObj && // check non empty (dud)
+        trackObj.public &&
+        (Math.round(trackObj.duration / 1000 / 60) <= MAX_DURATION) &&
+        (trackObj.plays <= MAX_PLAYS);
 }
 
 // Sends req for next random track JSON obj from SC api.
@@ -113,29 +132,35 @@ module.exports = function (app) {
 
     // TODO add catch block at end of chain
     app.get('/next', async function (req, res) {
-        const test_url = "https://soundcloud.com/crayyan/jump";
+        //const test_url = "https://soundcloud.com/crayyan/jump";
         //scdl.download(test_url).then(stream => stream.pipe(fs.createWriteStream("audio.mp3")))
-        //let pot_tracks = []
-        //for (let j = 0; j < 10; ++ j) { pot_tracks.push(getId()); }
-        let track_id = [getId()];
+        // Number of bulk requests to make
+        let pot_tracks = [].fill(null, 0, 9);
+        pot_tracks.map(() => getId());
+        logger("ARRAY:");
+        pot_tracks.forEach(e => logger(e));
+        //for (let j = 0; j < NUM_REQUESTS; ++ j) { pot_tracks.push(getId()); }
+        //let track_id = [getId()];
 
-        scdl.getTrackInfoByID(track_id)
+        scdl.getTrackInfoByID(pot_tracks)
             .then(result => {
                 // TODO bulk requests
-                //result.forEach((track) => logger("TRACK: " + track));
-                const scResponse = result[0];
-                if (scResponse) {
-                    // TODO parse trackObj + criteria check + sauce it to client
-                    let trackObj = {};
-                    trackObj.title = scResponse.title;
-                    trackObj.artist = scResponse.user.username;
-                    trackObj.url = scResponse.permalink_url;
-                    logger("SUCCESS");
-                    res.json(trackObj);
-                } else {
-                    // TODO recurse
-                    res.json({dud: ""});
-                }
+                const trackObjs = result.filter((trackObj) => passCriteria(trackObj));
+                res.json({tracks: trackObjs});
+                logger("SUCCESS");
+                //const scResponse = result[0];
+                // if (scResponse) {
+                //     // TODO parse trackObj + criteria check + sauce it to client
+                //     let trackObj = {};
+                //     trackObj.title = scResponse.title;
+                //     trackObj.artist = scResponse.user.username;
+                //     trackObj.url = scResponse.permalink_url;
+                //     logger("SUCCESS");
+                //     res.json(trackObj);
+                // } else {
+                //     // TODO recurse
+                //     res.json({dud: ""});
+                // }
             })
             .catch(result => logger(result));
     });
