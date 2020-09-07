@@ -3,3 +3,8 @@
   margin: auto;
   width: 80em;
 }
+
+.loading {
+  display: none;
+  float: bottom;
+}

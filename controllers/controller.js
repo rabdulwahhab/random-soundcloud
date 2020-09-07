@@ -47,11 +47,12 @@ module.exports = function (app) {
         for (let j = 0; j < NUM_REQUESTS; ++j) {
             pot_tracks.push(getId());
         }
-        pot_tracks[0] = 123456789; // TODO remove this
+        //pot_tracks[0] = 123456789; // TODO remove this
         //pot_tracks.map(() => getId());
         logger("ARRAY:");
         pot_tracks.forEach(e => logger(e));
 
+        // TODO handle all duds case
         scdl.getTrackInfoByID(pot_tracks)
             .then(result => {
                 //logger("RESULT FROM PROMISE ----");

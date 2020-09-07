@@ -52,15 +52,17 @@ $(document).ready(() => {
     };
 
     // Handle forward button
+    // TODO handle cases where cache is already loaded
     $("#next").click(() => {
         logger("clicked next button");
+        $("#loading_icon").fadeIn(2000);
         // TODO return next trackObj with necessary info + stream param for howler
         $.ajax({
             type: "GET",
             url: "/next",
             data: {numRequests: 10} // TODO implement sliding window
         }).done(function (data) {
-            // TODO call next() with new trackObj from server
+            $("#loading_icon").hide();
             logger("CLIENT ---");
             let tracks = data.tracks;
             logger("RAW TRACKS RECEIVED: ");
