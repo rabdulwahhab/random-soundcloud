@@ -1,7 +1,13 @@
 // Client-side script
 
 let i = -1;
-let carousel = [null, null, null, null, null, null, null, null, null, null];
+const CAROUSEL_SIZE = 10;
+const carousel = [];
+for (let j = 0; j < CAROUSEL_SIZE; ++j) {
+    carousel.push(null);
+}
+
+//let carousel = [null, null, null, null, null, null, null, null, null, null];
 
 function logger(msg) {
     console.log(msg);
@@ -10,19 +16,24 @@ function logger(msg) {
 // Updates carousel to keep consistent state (cache + current track index)
 // CALL ONLY WHEN VALID NEXT TRACK IS OBTAINED
 function next(trackObj) {
-    logger(i);
     i = (i + 1) % 10;
+    logger(i);
     carousel[i] = trackObj;
-    logger(carousel);
+    //logger(carousel);
 }
 
 // Returns previous track JSON obj from cache and updates state (current track index)
 function back() {
-    i = i - 1;
-    if (i <= 0) i = 0;
+    carousel[i] = null;
+    i = (i - 1) % 10;
     logger(i);
     logger(carousel);
-    return carousel[i % 10];
+    const prev = carousel[i];
+    if (prev) {
+        return prev;
+    } else {
+        logger("NO MORE TRACKS");
+    }
 }
 
 $(document).ready(() => {
@@ -47,13 +58,34 @@ $(document).ready(() => {
         $.ajax({
             type: "GET",
             url: "/next",
-            data: {dummy: "dummy"}
+            data: {numRequests: 10} // TODO implement sliding window
         }).done(function (data) {
             // TODO call next() with new trackObj from server
-            logger(data);
-            updateDom(data.title, data.url, data.artist);
+            logger("CLIENT ---");
+            let tracks = data.tracks;
+            logger("RAW TRACKS RECEIVED: ");
+            logger(tracks);
+            next(tracks.shift()); // load a track + update state
+            logger("AFTER POP, RAW TRACKS:");
+            tracks.map(e => logger(e));
+
+            // load cache with rest of tracks received
+            let j = (i + 1) % CAROUSEL_SIZE;
+            while (tracks.length > 0) {
+                logger(j);
+                carousel[j] = tracks.shift();
+                logger("IN LOOP:");
+                //logger(tracks.shift());
+                j = (j + 1) % CAROUSEL_SIZE;
+            }
+            logger("CAROUSEL NOW:");
+            logger(carousel);
             // TODO update DOM
-            //location.reload(); //outputs to template file
+            const curr = carousel[i];
+            logger("NEXT TRACK:");
+            logger(curr);
+            updateDom(curr.title, curr.url, curr.artist);
+            //location.reload(); // refresh page, outputs to template file
         }).fail(function () {
             alert("An error occurred.");
         });
@@ -71,5 +103,4 @@ $(document).ready(() => {
         //     updateDom(title, permalink_url, artist);
         // }
     });
-})
-;
+});

@@ -9,7 +9,7 @@ const logger = util.logger;
 // Globals
 const MAX_DURATION = 6 // in minutes
 const MAX_PLAYS = 100000;
-const NUM_REQUESTS = 10; // bulk handling
+//const NUM_REQUESTS = 10; // bulk handling
 
 // function logger(msg) {
 //     console.log(msg);
@@ -42,6 +42,7 @@ module.exports = function (app) {
         //const test_url = "https://soundcloud.com/crayyan/jump";
         //scdl.download(test_url).then(stream => stream.pipe(fs.createWriteStream("audio.mp3")))
         // Number of bulk requests to make
+        const NUM_REQUESTS = req.query.numRequests;
         let pot_tracks = [];
         for (let j = 0; j < NUM_REQUESTS; ++j) {
             pot_tracks.push(getId());
@@ -55,7 +56,11 @@ module.exports = function (app) {
             .then(result => {
                 //logger("RESULT FROM PROMISE ----");
                 //logger(result);
-                const trackObjs = result.filter(passCriteria);
+                let trackObjs = result.filter(passCriteria);
+                trackObjs = trackObjs.map((obj) => {
+                    // TODO ReadableStream?
+                    return {title: obj.title, artist: obj.user.username, url: obj.permalink_url};
+                })
                 logger("TRACK OBJS ------");
                 logger(trackObjs);
                 res.json({tracks: trackObjs});
