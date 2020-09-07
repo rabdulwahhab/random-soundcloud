@@ -2,7 +2,7 @@
 
 let i = -1;
 let NUM_REQUESTS = 20;
-const CAROUSEL_SIZE = 20;
+const CAROUSEL_SIZE = 10;
 const carousel = [];
 for (let j = 0; j < CAROUSEL_SIZE; ++j) {
     carousel.push(null);
@@ -23,18 +23,21 @@ function next(trackObj) {
     //logger(carousel);
 }
 
-// Returns previous track JSON obj from cache and updates state (current track index)
+// Updates state (current track index) to previous
 function back() {
+    // TODO modulo bug for negative numbers
     carousel[i] = null;
-    i = (i - 1) % CAROUSEL_SIZE;
+    i = (((i - 1) % CAROUSEL_SIZE) + CAROUSEL_SIZE) % CAROUSEL_SIZE;
+    //i = (i - 1) % CAROUSEL_SIZE;
     logger(i);
     logger(carousel);
-    const prev = carousel[i];
-    if (prev) {
-        return prev;
-    } else {
-        logger("NO MORE TRACKS");
-    }
+    // const prev = carousel[i];
+    // if (prev) {
+    //     return prev;
+    // } else {
+    //     logger("NO MORE TRACKS");
+    //     return null;
+    // }
 }
 
 $(document).ready(() => {
@@ -74,7 +77,7 @@ $(document).ready(() => {
 
             // load cache with rest of tracks received
             let j = (i + 1) % CAROUSEL_SIZE;
-            while (tracks.length > 0) {
+            while (j !== i && tracks.length > 0) {
                 logger(j);
                 carousel[j] = tracks.shift();
                 logger("IN LOOP:");
@@ -90,20 +93,20 @@ $(document).ready(() => {
             updateDom(curr.title, curr.url, curr.artist);
             //location.reload(); // refresh page, outputs to template file
         }).fail(function () {
-            alert("An error occurred.");
+            alert("An error occurred. Please check your internet connection and try again.");
         });
     });
 
     // Handle back button
     $("#back").click(() => {
         logger("clicked back button");
+        back();
         // TODO check if works properly
-        // const obj = back(); // Return prev track obj (effect: update current index state)
-        // if (obj) {
-        //     const title = obj.title;
-        //     const artist = obj.user.username;
-        //     const permalink_url = obj.permalink_url;
-        //     updateDom(title, permalink_url, artist);
-        // }
+        const prev = carousel[i]; // get prev track obj
+        if (prev) {
+            updateDom(prev.title, prev.permalink_url, prev.artist);
+        } else {
+            logger("NO MORE TRACKS");
+        }
     });
 });

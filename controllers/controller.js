@@ -66,7 +66,6 @@ module.exports = function (app) {
                 logger(trackObjs);
                 res.json({tracks: trackObjs});
                 logger("SUCCESS");
-                // TODO send back prettier data
             })
             .catch(result => logger(result));
     });
