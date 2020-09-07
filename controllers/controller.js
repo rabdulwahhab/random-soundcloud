@@ -7,7 +7,7 @@ const util = require('../util/logic');
 const logger = util.logger;
 
 // Globals
-const MAX_DURATION = 6 // in minutes
+const MAX_DURATION = 7 // in minutes
 const MAX_PLAYS = 100000;
 //const NUM_REQUESTS = 10; // bulk handling
 
