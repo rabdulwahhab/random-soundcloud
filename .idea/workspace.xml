@@ -44,6 +44,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.HTML" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/util" />
+      <recent name="$PROJECT_DIR$/public/assets" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/public/resources/scripts" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -73,6 +83,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="21" y="34" key="SettingsEditor" timestamp="1599352377437">
+      <screen x="0" y="23" width="1024" height="745" />
+    </state>
+    <state x="21" y="34" key="SettingsEditor/1024.23.1280.777/0.23.1024.745@0.23.1024.745" timestamp="1599352377437" />
     <state x="1466" y="332" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599325648482">
       <screen x="1024" y="23" width="1280" height="777" />
     </state>
