@@ -115,11 +115,27 @@ module.exports = function (app) {
     app.get('/next', async function (req, res) {
         const test_url = "https://soundcloud.com/crayyan/jump";
         //scdl.download(test_url).then(stream => stream.pipe(fs.createWriteStream("audio.mp3")))
-        scdl.getTrackInfoByID([123456789])
+        //let pot_tracks = []
+        //for (let j = 0; j < 10; ++ j) { pot_tracks.push(getId()); }
+        let track_id = [getId()];
+
+        scdl.getTrackInfoByID(track_id)
             .then(result => {
-                logger("SUCCESS");
-                logger(result);
-                res.json({dummy: "dummy123"});
+                // TODO bulk requests
+                //result.forEach((track) => logger("TRACK: " + track));
+                const scResponse = result[0];
+                if (scResponse) {
+                    // TODO parse trackObj + criteria check + sauce it to client
+                    let trackObj = {};
+                    trackObj.title = scResponse.title;
+                    trackObj.artist = scResponse.user.username;
+                    trackObj.url = scResponse.permalink_url;
+                    logger("SUCCESS");
+                    res.json(trackObj);
+                } else {
+                    // TODO recurse
+                    res.json({dud: ""});
+                }
             })
             .catch(result => logger(result));
     });

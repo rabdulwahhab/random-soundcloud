@@ -37,7 +37,7 @@ $(document).ready(() => {
     const updateDom = (title, permalink_url, artist) => {
         $("#title").text(title);
         $("#artist").text(artist);
-        $("#track").attr("href", permalink_url);
+        $("#track_url").attr("href", permalink_url);
     };
 
     // Handle forward button
@@ -51,8 +51,9 @@ $(document).ready(() => {
         }).done(function (data) {
             // TODO call next() with new trackObj from server
             logger(data);
+            updateDom(data.title, data.url, data.artist);
             // TODO update DOM
-            // location.reload(); outputs to template file
+            //location.reload(); //outputs to template file
         }).fail(function () {
             alert("An error occurred.");
         });
