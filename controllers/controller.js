@@ -59,10 +59,9 @@ function passCriteria(trackObj) {
     //     logger("SUCCESS");
     //     res.json(trackObj);
     // }
-    return trackObj && // check non empty (dud)
-        trackObj.public &&
+    return trackObj && trackObj.public &&
         (Math.round(trackObj.duration / 1000 / 60) <= MAX_DURATION) &&
-        (trackObj.plays <= MAX_PLAYS);
+        (trackObj.playback_count <= MAX_PLAYS);
 }
 
 // Sends req for next random track JSON obj from SC api.
@@ -135,17 +134,26 @@ module.exports = function (app) {
         //const test_url = "https://soundcloud.com/crayyan/jump";
         //scdl.download(test_url).then(stream => stream.pipe(fs.createWriteStream("audio.mp3")))
         // Number of bulk requests to make
-        let pot_tracks = [].fill(null, 0, 9);
+        //let pot_tracks = [].fill(null, 0, 9);
+        let pot_tracks = [];
+        for (let j = 0; j < NUM_REQUESTS; ++j) {
+            pot_tracks.push(getId());
+        }
+        pot_tracks[0] = 123456789;
         pot_tracks.map(() => getId());
         logger("ARRAY:");
         pot_tracks.forEach(e => logger(e));
-        //for (let j = 0; j < NUM_REQUESTS; ++ j) { pot_tracks.push(getId()); }
         //let track_id = [getId()];
 
         scdl.getTrackInfoByID(pot_tracks)
             .then(result => {
                 // TODO bulk requests
-                const trackObjs = result.filter((trackObj) => passCriteria(trackObj));
+                logger("RESULT FROM PROMISE ----");
+                logger(result);
+                logger("\n");
+                const trackObjs = result.filter(passCriteria);
+                logger("TRACK OBJS ------");
+                logger(trackObjs);
                 res.json({tracks: trackObjs});
                 logger("SUCCESS");
                 //const scResponse = result[0];
