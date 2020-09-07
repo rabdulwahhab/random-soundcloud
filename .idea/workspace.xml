@@ -27,6 +27,7 @@
   <component name="ChangeListManager">
     <list default="true" id="06cdbffe-7a24-4481-8e18-b15fec07b867" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/controller.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +68,7 @@
       <updated>1599323447210</updated>
       <workItem from="1599323449992" duration="37000" />
       <workItem from="1599323521714" duration="13054000" />
+      <workItem from="1599493013688" duration="1071000" />
     </task>
     <servers />
   </component>
@@ -83,6 +85,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="21" y="34" key="SettingsEditor" timestamp="1599352377437">

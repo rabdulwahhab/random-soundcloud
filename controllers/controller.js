@@ -17,7 +17,7 @@ const NUM_REQUESTS = 10; // bulk handling
 
 // TODO Refine range???
 function getId() {
-    return Math.floor(Math.random() * 999999999) + 100000000;
+    return Math.random().toFixed(9).split('.')[1];
 }
 
 // Checks if a given JSON track info obj is acceptable (not empty + selection)
@@ -47,7 +47,7 @@ module.exports = function (app) {
             pot_tracks.push(getId());
         }
         pot_tracks[0] = 123456789; // TODO remove this
-        pot_tracks.map(() => getId());
+        //pot_tracks.map(() => getId());
         logger("ARRAY:");
         pot_tracks.forEach(e => logger(e));
 
