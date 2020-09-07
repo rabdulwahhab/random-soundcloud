@@ -1,7 +1,8 @@
 // Client-side script
 
 let i = -1;
-const CAROUSEL_SIZE = 10;
+let NUM_REQUESTS = 20;
+const CAROUSEL_SIZE = 20;
 const carousel = [];
 for (let j = 0; j < CAROUSEL_SIZE; ++j) {
     carousel.push(null);
@@ -16,7 +17,7 @@ function logger(msg) {
 // Updates carousel to keep consistent state (cache + current track index)
 // CALL ONLY WHEN VALID NEXT TRACK IS OBTAINED
 function next(trackObj) {
-    i = (i + 1) % 10;
+    i = (i + 1) % CAROUSEL_SIZE;
     logger(i);
     carousel[i] = trackObj;
     //logger(carousel);
@@ -25,7 +26,7 @@ function next(trackObj) {
 // Returns previous track JSON obj from cache and updates state (current track index)
 function back() {
     carousel[i] = null;
-    i = (i - 1) % 10;
+    i = (i - 1) % CAROUSEL_SIZE;
     logger(i);
     logger(carousel);
     const prev = carousel[i];
@@ -60,7 +61,7 @@ $(document).ready(() => {
         $.ajax({
             type: "GET",
             url: "/next",
-            data: {numRequests: 10} // TODO implement sliding window
+            data: {numRequests: NUM_REQUESTS} // TODO implement sliding window
         }).done(function (data) {
             $("#loading_icon").hide();
             logger("CLIENT ---");
