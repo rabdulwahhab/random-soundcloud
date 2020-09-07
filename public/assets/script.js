@@ -34,11 +34,11 @@ $(document).ready(() => {
         // TODO play button event handling
     });
 
-    // const updateDom = (title, permalink_url, artist) => {
-    //     $("#title").text(title);
-    //     $("#artist").text(artist);
-    //     $("#track").attr("href", permalink_url);
-    // };
+    const updateDom = (title, permalink_url, artist) => {
+        $("#title").text(title);
+        $("#artist").text(artist);
+        $("#track").attr("href", permalink_url);
+    };
 
     // Handle forward button
     $("#next").click(() => {
@@ -51,7 +51,6 @@ $(document).ready(() => {
         }).done(function (data) {
             // TODO call next() with new trackObj from server
             logger(data);
-            logger(data.dummy);
             // TODO update DOM
             // location.reload(); outputs to template file
         }).fail(function () {
