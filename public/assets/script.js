@@ -2,7 +2,7 @@
 
 let i = -1;
 let NUM_REQUESTS = 20;
-const CAROUSEL_SIZE = 10;
+const CAROUSEL_SIZE = 20;
 const carousel = [];
 for (let j = 0; j < CAROUSEL_SIZE; ++j) {
     carousel.push(null);
@@ -59,7 +59,9 @@ $(document).ready(() => {
     // TODO handle cases where cache is already loaded
     $("#next").click(() => {
         logger("clicked next button");
+        // Page handling
         $("#loading_icon").fadeIn(2000);
+        $("#next").prop('disabled', true);
         // TODO return next trackObj with necessary info + stream param for howler
         $.ajax({
             type: "GET",
@@ -91,6 +93,7 @@ $(document).ready(() => {
             logger("NEXT TRACK:");
             logger(curr);
             updateDom(curr.title, curr.url, curr.artist);
+            $("#next").prop('disabled', false);
             //location.reload(); // refresh page, outputs to template file
         }).fail(function () {
             alert("An error occurred. Please check your internet connection and try again.");
