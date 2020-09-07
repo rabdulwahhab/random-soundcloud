@@ -58,7 +58,6 @@ $(document).ready(() => {
             alert("An error occurred.");
         });
     });
-    //getNextTrack(updateDom);
 
     // Handle back button
     $("#back").click(() => {
