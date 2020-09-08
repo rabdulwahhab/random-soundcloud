@@ -2,7 +2,7 @@
 
 let i = -1;
 let NUM_REQUESTS = 50;
-const CAROUSEL_SIZE = 20;
+const CAROUSEL_SIZE = 30;
 let NUM_CACHED = 0;
 const carousel = [];
 for (let j = 0; j < CAROUSEL_SIZE; ++j) {
@@ -102,7 +102,6 @@ $(document).ready(() => {
                 logger(carousel);
                 updateDom(curr.title, curr.url, curr.artist);
                 $("#next").prop('disabled', false);
-                //location.reload(); // refresh page, outputs to template file
             }).fail(function () {
                 alert("An error occurred. Please check your internet connection and try again.");
             });
@@ -110,6 +109,9 @@ $(document).ready(() => {
             logger("CLIENT --- GET NEXT FROM CACHE");
             // TODO get next from cache
             next(); // advance state
+            while (!carousel[i]) {
+                next();
+            }
             const curr = carousel[i];
             logger("NEXT TRACK:");
             logger(curr);
