@@ -9,7 +9,6 @@ const logger = util.logger;
 // Globals
 const MAX_DURATION = 7 // in minutes
 const MAX_PLAYS = 200000;
-//const NUM_REQUESTS = 10; // bulk handling
 
 // function logger(msg) {
 //     console.log(msg);
