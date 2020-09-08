@@ -47,6 +47,7 @@ $(document).ready(() => {
                     CACHE.push(tracks.shift());
                 }
 
+                // TODO refactor for duplicate code
                 // store in history + update current
                 HISTORY.push(CURRENT);
                 HISTORY.shift();

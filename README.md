@@ -8,5 +8,13 @@
 <br>
 <br>
 <br>
+<h3>Running:</h3>
+1) Once you have <code>node</code> and <code>nodemon</code> installed globally (npm):
+<br>
+<code>nodemon app.js</code>.
+<br>
+2) Visit port 8000 locally.
+
+<br>
 <br>
 prod. by 36plain
