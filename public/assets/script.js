@@ -1,28 +1,12 @@
 // Client-side script
 
-let i = -1;
-let carousel = [null, null, null, null, null, null, null, null, null, null];
+let NUM_REQUESTS = 50;
+const CACHE = [];
+const HISTORY = [null, null, null, null, null];
+let CURRENT = null;
 
 function logger(msg) {
     console.log(msg);
-}
-
-// Updates carousel to keep consistent state (cache + current track index)
-// CALL ONLY WHEN VALID NEXT TRACK IS OBTAINED
-function next(trackObj) {
-    logger(i);
-    i = (i + 1) % 10;
-    carousel[i] = trackObj;
-    logger(carousel);
-}
-
-// Returns previous track JSON obj from cache and updates state (current track index)
-function back() {
-    i = i - 1;
-    if (i <= 0) i = 0;
-    logger(i);
-    logger(carousel);
-    return carousel[i % 10];
 }
 
 $(document).ready(() => {
@@ -41,36 +25,72 @@ $(document).ready(() => {
     };
 
     // Handle forward button
+    // TODO handle cases where cache is already loaded
     $("#next").click(() => {
         logger("clicked next button");
-        // TODO return next trackObj with necessary info + stream param for howler
-        $.ajax({
-            type: "GET",
-            url: "/next",
-            data: {dummy: "dummy"}
-        }).done(function (data) {
-            // TODO call next() with new trackObj from server
-            logger(data);
-            updateDom(data.title, data.url, data.artist);
-            // TODO update DOM
-            //location.reload(); //outputs to template file
-        }).fail(function () {
-            alert("An error occurred.");
-        });
+
+        // Make request for more tracks
+        if (CACHE.length <= 7) { // TODO define threshold
+            logger("CLIENT --- MAKING REQUESTS");
+            $("#next").prop('disabled', true);
+            $("#loading_icon").fadeIn(2000);
+            // TODO stream param for howler???
+            $.ajax({
+                type: "GET",
+                url: "/next",
+                data: {numRequests: NUM_REQUESTS} // TODO implement sliding window
+            }).done(function (data) {
+                logger("CLIENT --- RESPONSE RECEIVED");
+                let tracks = data.tracks;
+                logger("RECEIVED " + tracks.length + " TRACKS");
+                while (tracks.length > 0) {
+                    CACHE.push(tracks.shift());
+                }
+
+                // store in history + update current
+                HISTORY.push(CURRENT);
+                HISTORY.shift();
+                CURRENT = CACHE.shift(); // TODO will return undef if no tracks found
+                logger("NEXT TRACK:");
+                logger(CURRENT);
+                logger(CACHE.length + " TRACKS IN CACHE");
+                logger("CACHE CONTAINS:");
+                logger(CACHE);
+                updateDom(CURRENT.title, CURRENT.url, CURRENT.artist);
+
+                $("#loading_icon").toggle();
+                $("#next").prop('disabled', false);
+            }).fail(function () {
+                alert("An error occurred. Please check your internet connection and try again.");
+            });
+        } else {
+            logger("CLIENT --- GET NEXT TRACK FROM CACHE");
+            // store in history
+            HISTORY.push(CURRENT);
+            HISTORY.shift();
+            CURRENT = CACHE.shift(); // TODO will return undef if no tracks found
+            logger("NEXT TRACK:");
+            logger(CURRENT);
+            logger(CACHE.length + " TRACKS IN CACHE");
+            logger("CACHE CONTAINS:");
+            logger(CACHE);
+            updateDom(CURRENT.title, CURRENT.url, CURRENT.artist)
+            //$("#next").prop('disabled', false);
+        }
     });
-    //getNextTrack(updateDom);
 
     // Handle back button
     $("#back").click(() => {
         logger("clicked back button");
         // TODO check if works properly
-        // const obj = back(); // Return prev track obj (effect: update current index state)
-        // if (obj) {
-        //     const title = obj.title;
-        //     const artist = obj.user.username;
-        //     const permalink_url = obj.permalink_url;
-        //     updateDom(title, permalink_url, artist);
-        // }
+        const prev = HISTORY.pop();
+        if (prev) {
+            CURRENT = prev;
+            HISTORY.unshift(null);
+            updateDom(CURRENT.title, CURRENT.permalink_url, CURRENT.artist);
+        } else {
+            logger("NO MORE TRACKS");
+            HISTORY.unshift(null);
+        }
     });
-})
-;
+});

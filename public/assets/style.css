@@ -1,5 +1,17 @@
 .center {
-  text-align: center;
-  margin: auto;
-  width: 80em;
+    text-align: center;
+    margin: auto;
+    width: 80em;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.loading {
+    display: none;
+    float: bottom;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
