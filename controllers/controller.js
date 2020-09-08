@@ -8,7 +8,7 @@ const logger = util.logger;
 
 // Globals
 const MAX_DURATION = 7 // in minutes
-const MAX_PLAYS = 100000;
+const MAX_PLAYS = 200000;
 //const NUM_REQUESTS = 10; // bulk handling
 
 // function logger(msg) {
@@ -52,7 +52,7 @@ module.exports = function (app) {
         logger("ARRAY:");
         pot_tracks.forEach(e => logger(e));
 
-        // TODO handle all duds case
+        // TODO MAJOR ::::: handle all duds case
         scdl.getTrackInfoByID(pot_tracks)
             .then(result => {
                 //logger("RESULT FROM PROMISE ----");
