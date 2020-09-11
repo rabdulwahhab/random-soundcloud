@@ -43,8 +43,36 @@ module.exports = function (app) {
   });
 
   app.get('/play', function (req, res) {
-    //logger(req.query.url);
-    scdl.getInfo(req.query.url).then(result => res.json({info: result}));
+    logger(req.query.url);
+    // scdl.getInfo(req.query.url)
+    //     .then(result => res.json({info: result}))
+    //     .catch(result => logger(result));
+    scdl.download(req.query.url)
+        .then(stream => {
+          const reader = stream.getReader();
+          return new ReadableStream({
+            start(controller) {
+              return pump();
+              function pump() {
+                return reader.read().then(({ done, value }) => {
+                  // When no more data needs to be consumed, close the stream
+                  if (done) {
+                    controller.close();
+                    return;
+                  }
+                  // Enqueue the next data chunk into our target stream
+                  controller.enqueue(value);
+                  return pump();
+                });
+              }
+            }
+          })
+        })
+        .then(stream => new Response(stream))
+        .then(response => response.blob())
+        .then(blob => URL.createObjectURL(blob))
+        .then(url => res.json({stream: url}))
+        .catch(err => logger(err));
   });
 
   app.get('/next', async function (req, res) {
@@ -72,7 +100,8 @@ module.exports = function (app) {
             return {
               title: obj.title,
               artist: obj.user.username,
-              url: obj.permalink_url
+              url: obj.permalink_url,
+              howl: null
             };
           })
           logger("TRACK OBJS ------");
