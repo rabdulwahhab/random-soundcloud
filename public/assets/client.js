@@ -15,7 +15,20 @@ $(document).ready(() => {
     // Handle play button
     $("#play").click(() => {
         logger("clicked play button");
+        if (!CURRENT) {
+            clickNextHandler();
+        }
         // TODO play button event handling
+        $.ajax({
+            type: "GET",
+            url: "/play",
+            data: {url: CURRENT.url}
+        }).done(function (data) {
+            logger("CLIENT --- PLAY RESPONSE RECEIVED");
+            logger(data.info);
+        }).fail(function () {
+            alert("An error occurred. Please check your internet connection and try again.");
+        });
     });
 
     const updateDom = (title, permalink_url, artist) => {
@@ -24,9 +37,7 @@ $(document).ready(() => {
         $("#track_url").attr("href", permalink_url);
     };
 
-    // Handle forward button
-    // TODO handle cases where cache is already loaded
-    $("#next").click(() => {
+    const clickNextHandler = () => {
         logger("clicked next button");
 
         // Make request for more tracks
@@ -78,7 +89,11 @@ $(document).ready(() => {
             updateDom(CURRENT.title, CURRENT.url, CURRENT.artist)
             //$("#next").prop('disabled', false);
         }
-    });
+    }
+
+    // Handle forward button
+    // TODO handle cases where cache is already loaded
+    $("#next").click(clickNextHandler);
 
     // Handle back button
     $("#back").click(() => {

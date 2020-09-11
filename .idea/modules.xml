@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/beat-page.iml" filepath="$PROJECT_DIR$/.idea/beat-page.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/random-soundcloud.iml" filepath="$PROJECT_DIR$/.idea/random-soundcloud.iml" />
     </modules>
   </component>
 </project>

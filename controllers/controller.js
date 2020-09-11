@@ -16,57 +16,71 @@ const MAX_PLAYS = 200000;
 
 // TODO Refine range???
 function getId() {
-    return Math.random().toFixed(9).split('.')[1];
+  return Math.random().toFixed(9).split('.')[1];
 }
 
 // Checks if a given JSON track info obj is acceptable (not empty + selection)
 function passCriteria(trackObj) {
-    return trackObj && trackObj.public &&
-        (Math.round(trackObj.duration / 1000 / 60) <= MAX_DURATION) &&
-        (trackObj.playback_count <= MAX_PLAYS);
+  logger("POLICY IS: ");
+  const policy = trackObj.policy;
+  logger(policy);
+  // If legal issues, only allow policy "ALLOW"
+  return trackObj && trackObj.public &&
+      (policy.localeCompare("SNIP") !== 0) &&
+      (Math.round(trackObj.duration / 1000 / 60) <= MAX_DURATION) &&
+      (trackObj.playback_count <= MAX_PLAYS);
 }
 
 // This is for exporting components that can be used by node in app.js.
 // Passing in the express var
 module.exports = function (app) {
 
-    // ROUTES
-    app.get('/', function (req, res) {
-        const trackObj = {title: "Random Soundcloud Tracks", artist: "", url: ""};
-        res.render('page', {track: trackObj});
-        // view name. auto searches in views folder which has been mapped to public
-    });
+  // ROUTES
+  app.get('/', function (req, res) {
+    const trackObj = {title: "Random Soundcloud Tracks", artist: "", url: ""};
+    res.render('page', {track: trackObj});
+    // view name. auto searches in views folder which has been mapped to public
+  });
 
-    app.get('/next', async function (req, res) {
-        //const test_url = "https://soundcloud.com/crayyan/jump";
-        //scdl.download(test_url).then(stream => stream.pipe(fs.createWriteStream("audio.mp3")))
-        // Number of bulk requests to make
-        const NUM_REQUESTS = req.query.numRequests;
-        let pot_tracks = [];
-        for (let j = 0; j < NUM_REQUESTS; ++j) {
-            pot_tracks.push(getId());
-        }
-        //pot_tracks[0] = 123456789; // TODO remove this
-        //pot_tracks.map(() => getId());
-        logger("ARRAY:");
-        pot_tracks.forEach(e => logger(e));
+  app.get('/play', function (req, res) {
+    //logger(req.query.url);
+    scdl.getInfo(req.query.url).then(result => res.json({info: result}));
+  });
 
-        // TODO MAJOR ::::: handle all duds case
-        scdl.getTrackInfoByID(pot_tracks)
-            .then(result => {
-                //logger("RESULT FROM PROMISE ----");
-                //logger(result);
-                let trackObjs = result.filter(passCriteria);
-                trackObjs = trackObjs.map((obj) => {
-                    // TODO ReadableStream?
-                    return {title: obj.title, artist: obj.user.username, url: obj.permalink_url};
-                })
-                logger("TRACK OBJS ------");
-                logger(trackObjs);
-                res.json({tracks: trackObjs});
-                logger("SUCCESS");
-            })
-            .catch(result => logger(result));
-    });
+  app.get('/next', async function (req, res) {
+    //const test_url = "https://soundcloud.com/crayyan/jump";
+    //scdl.download(test_url).then(stream => stream.pipe(fs.createWriteStream("audio.mp3")))
+    // Number of bulk requests to make
+    const NUM_REQUESTS = req.query.numRequests;
+    let pot_tracks = [];
+    for (let j = 0; j < NUM_REQUESTS; ++j) {
+      pot_tracks.push(getId());
+    }
+    //pot_tracks[0] = 123456789; // TODO remove this
+    //pot_tracks.map(() => getId());
+    logger("ARRAY:");
+    pot_tracks.forEach(e => logger(e));
+
+    // TODO MAJOR ::::: handle all duds case
+    scdl.getTrackInfoByID(pot_tracks)
+        .then(result => {
+          //logger("RESULT FROM PROMISE ----");
+          //logger(result);
+          let trackObjs = result.filter(passCriteria);
+          trackObjs = trackObjs.map((obj) => {
+            // TODO ReadableStream?
+            return {
+              title: obj.title,
+              artist: obj.user.username,
+              url: obj.permalink_url
+            };
+          })
+          logger("TRACK OBJS ------");
+          logger(trackObjs);
+          res.json({tracks: trackObjs});
+          logger("SUCCESS");
+        })
+        .catch(result => logger(result));
+  });
 
 };

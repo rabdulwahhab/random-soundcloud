@@ -26,8 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="06cdbffe-7a24-4481-8e18-b15fec07b867" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/beat-page.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/random-soundcloud.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/page.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/page.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +51,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.HTML" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -69,6 +74,8 @@
       <workItem from="1599323449992" duration="37000" />
       <workItem from="1599323521714" duration="13054000" />
       <workItem from="1599493013688" duration="25890000" />
+      <workItem from="1599841634242" duration="1333000" />
+      <workItem from="1599843601383" duration="2115000" />
     </task>
     <servers />
   </component>
@@ -88,10 +95,11 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="21" y="34" key="SettingsEditor" timestamp="1599352377437">
-      <screen x="0" y="23" width="1024" height="745" />
+    <state x="1050" y="34" key="SettingsEditor" timestamp="1599843579007">
+      <screen x="1024" y="23" width="1280" height="777" />
     </state>
     <state x="21" y="34" key="SettingsEditor/1024.23.1280.777/0.23.1024.745@0.23.1024.745" timestamp="1599352377437" />
+    <state x="1050" y="34" key="SettingsEditor/1024.23.1280.777/0.23.1024.745@1024.23.1280.777" timestamp="1599843579007" />
     <state x="1466" y="332" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599325648482">
       <screen x="1024" y="23" width="1280" height="777" />
     </state>
