@@ -100,10 +100,11 @@ $(document).ready(() => {
         logger("clicked back button");
         // TODO check if works properly
         const prev = HISTORY.pop();
+        logger(prev);
         if (prev) {
             CURRENT = prev;
-            HISTORY.unshift(null);
-            updateDom(CURRENT.title, CURRENT.permalink_url, CURRENT.artist);
+            HISTORY.unshift(null); // retain HISTORY size
+            updateDom(CURRENT.title, CURRENT.url, CURRENT.artist);
         } else {
             logger("NO MORE TRACKS");
             HISTORY.unshift(null);
