@@ -22,19 +22,31 @@ $(document).ready(() => {
     }
 
     if (!CURRENT.howl) { // track has NOT been loaded before, ergo load
-      CURRENT.howl = new Howl({
-        src: CURRENT.url,
-        html5: true,
-        autoUnlock: true,
-        autoSuspend: true,
-        format: ['mp3', 'aac'], // TODO could be an issue
-        autoplay: true,
-        volume: 1.0,
-        loop: false,
-        preload: true,
-        onloaderror: logger("AUDIO FAILED TO LOAD"),
-        onplayerror: logger("AUDIO FAILED TO PLAY"),
-        // TODO onend: doSomething()
+      $.ajax({
+        type: "GET",
+        url: "/play",
+        data: {url: CURRENT.url}
+      }).done(function (data) {
+        logger("CLIENT --- PLAY RESPONSE RECEIVED");
+        logger(data);
+        CURRENT.howl = new Howl({
+          src: data,
+          html5: true,
+          autoUnlock: true,
+          autoSuspend: true,
+          format: ['mp3', 'aac'], // TODO could be an issue
+          autoplay: true,
+          volume: 1.0,
+          loop: false,
+          preload: true,
+          onloaderror: logger("AUDIO FAILED TO LOAD"),
+          onplayerror: logger("AUDIO FAILED TO PLAY"),
+          // TODO onend: doSomething()
+        });
+        // logger(data.stream);
+      }).fail(function () {
+        alert("A streaming error occurred. Please check your internet" +
+            " connection and try again.");
       });
     } else {
       CURRENT.howl.play();
