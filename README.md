@@ -26,10 +26,10 @@ Maybe you're looking for inspiration, or wondering what in the hell kind of trac
    looking to
   discover the pearls you've heard about that lie at the
   bottom of the server
- somewhere waiting for a discerning ear to hear them for what they truly are. The algorithms and the masses have
-  either overlooked them, or misjudged them. No longer will these wonderful tracks and
+ somewhere waiting for a discerning ear. The algorithms and the masses have
+  either overlooked them, or misjudged them. No longer will these tracks and
    artists remain
-   unearthed. 
+   unearthed about the sea floor. 
    <br>
    <br>
    Well, now you've got a shovel.
@@ -40,8 +40,10 @@ Maybe you're looking for inspiration, or wondering what in the hell kind of trac
 <br>
 <h4>WARNING:</h4>
 Use according to your own discretion and sensibilities. The content generated differs widely in nature and is likely
- to be explicit. There's also a lot of garbage out at sea quite frankly. You've been warned.
+ to be explicit at times. There's also a lot of garbage out there quite frankly. You've been warned.
 <h3>Running:</h3>
+0) `yarn` the dependencies.
+<br>
 1) Once you have <code>node</code> and <code>nodemon</code> installed globally (npm):
 <br>
 <code>nodemon app.js</code>.
