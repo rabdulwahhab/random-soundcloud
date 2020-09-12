@@ -4,6 +4,7 @@ let NUM_REQUESTS = 50;
 const CACHE = [];
 const HISTORY = [null, null, null, null, null];
 let CURRENT = null;
+let PLAYING = false;
 
 function logger(msg) {
   console.log(msg);
@@ -12,8 +13,13 @@ function logger(msg) {
 $(document).ready(() => {
   alert("Hi, jQuery is enabled");
 
-  // Handle play button
-  $("#play").click(() => {
+  const updateDom = (title, permalink_url, artist) => {
+    $("#title").text(title);
+    $("#artist").text(artist);
+    $("#track_url").attr("href", permalink_url);
+  };
+
+  const playTrackhandler = () => {
     logger("clicked play button");
     if (!CURRENT) {
       // TODO either get next or nothing
@@ -21,63 +27,44 @@ $(document).ready(() => {
       return;
     }
 
-    if (!CURRENT.howl) { // track has NOT been loaded before, ergo load
-      $.ajax({
-        type: "GET",
-        url: "/play",
-        data: {url: CURRENT.url}
-      }).done(function (data) {
-        logger("CLIENT --- PLAY RESPONSE RECEIVED");
-        let streamLink = window.location.href.split('/').slice(0, 3).join('/');
-        streamLink = streamLink.concat("/play?url=").concat(CURRENT.url);
-        logger(streamLink);
+    let streamLink = window.location.href.split('/').slice(0, 3).join('/');
+    streamLink = streamLink.concat("/play?url=").concat(CURRENT.url);
+    logger(streamLink);
 
-        // for html
-        //$("#player").attr("src",
-        // "http://localhost:8000/play?url=https://soundcloud.com/meojoe/cant-breakup-girl-cant-breakaway-boy-leessang-jung-in");
+    // for html
+    $("#player").attr("src", streamLink);
 
-        CURRENT.howl = new Howl({
-          src: streamLink,
-          html5: true,
-          autoUnlock: true,
-          autoSuspend: true,
-          format: ['mp3', 'aac'], // TODO could be an issue
-          autoplay: true,
-          volume: 1.0,
-          loop: false,
-          preload: true,
-          onloaderror: logger("AUDIO FAILED TO LOAD"),
-          onplayerror: logger("AUDIO FAILED TO PLAY"),
-          // TODO onend: doSomething()
-        });
-      }).fail(function () {
-        alert("A streaming error occurred. Please check your internet" +
-            " connection and try again.");
-      });
-    } else {
-      CURRENT.howl.play();
-    }
-    // TODO play button event handling
-    // $.ajax({
-    //   type: "GET",
-    //   url: "/play",
-    //   data: {url: CURRENT.url}
-    // }).done(function (data) {
-    //   logger("CLIENT --- PLAY RESPONSE RECEIVED");
-    //   logger(data.stream);
-    // }).fail(function () {
-    //   alert("An error occurred. Please check your internet connection and try again.");
-    // });
-  });
-
-  const updateDom = (title, permalink_url, artist) => {
-    $("#title").text(title);
-    $("#artist").text(artist);
-    $("#track_url").attr("href", permalink_url);
+    // if (!CURRENT.howl) { // track has NOT been loaded before, ergo load
+    //   logger("CLIENT --- LOADING TRACK");
+    //   let streamLink = window.location.href.split('/').slice(0, 3).join('/');
+    //   streamLink = streamLink.concat("/play?url=").concat(CURRENT.url);
+    //   logger(streamLink);
+    //
+    //   CURRENT.howl = new Howl({
+    //     src: streamLink,
+    //     html5: true,
+    //     autoUnlock: true,
+    //     autoSuspend: true,
+    //     format: ['mp3', 'aac'], // TODO could be an issue
+    //     //autoplay: true,
+    //     volume: 1.0,
+    //     loop: false,
+    //     preload: true,
+    //     onloaderror: logger("AUDIO FAILED TO LOAD"),
+    //     onplayerror: logger("AUDIO FAILED TO PLAY"),
+    //     onend: logger("TRACK ENDED")
+    //   });
+    // } else {
+    //   CURRENT.howl.play();
+    //   PLAYING = true;
+    // }
   };
 
-  const clickNextHandler = () => {
+  const nextTrackHandler = () => {
     logger("clicked next button");
+    if (PLAYING) {
+      CURRENT.howl.stop();
+    }
 
     // Make request for more tracks
     if (CACHE.length <= 7) { // TODO define threshold
@@ -130,12 +117,7 @@ $(document).ready(() => {
     }
   }
 
-  // Handle forward button
-  // TODO handle cases where cache is already loaded
-  $("#next").click(clickNextHandler);
-
-  // Handle back button
-  $("#back").click(() => {
+  const backTrackHandler = () => {
     logger("clicked back button");
     // TODO check if works properly
     const prev = HISTORY.pop();
@@ -148,5 +130,14 @@ $(document).ready(() => {
       logger("NO MORE TRACKS");
       HISTORY.unshift(null);
     }
-  });
+  };
+
+  // Handle play button
+  $("#play").click(playTrackhandler);
+
+  // Handle forward button
+  $("#next").click(nextTrackHandler);
+
+  // Handle back button
+  $("#back").click(backTrackHandler);
 });

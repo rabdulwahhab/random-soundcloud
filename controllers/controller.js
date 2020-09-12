@@ -44,13 +44,13 @@ module.exports = function (app) {
 
   app.get('/play', function (req, res) {
     logger(req.query.url);
-    const test_url = "https://soundcloud.com/crayyan/jump";
+    //const test_url = "https://soundcloud.com/crayyan/jump";
     let readableStream;
 
-    //scdl.download(test_url).then(stream =>
-    // stream.pipe(fs.createWriteStream("audio.mp3")));
     res.writeHead(200, {'Content-Type': 'audio/mpeg'});
-    //logger(req);
+    logger("REQUEST IS: ");
+    logger(req);
+    logger(req.originalUrl);
     logger(__dirname);
     // const src = fs.createReadStream('audio.mp3');
     // src.pipe(res);
@@ -120,7 +120,7 @@ module.exports = function (app) {
           //logger(result);
           let trackObjs = result.filter(passCriteria);
           trackObjs = trackObjs.map((obj) => {
-            // TODO ReadableStream?
+            // TODO add formatted streamlink param
             return {
               title: obj.title,
               artist: obj.user.username,
