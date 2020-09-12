@@ -28,7 +28,16 @@ $(document).ready(() => {
         data: {url: CURRENT.url}
       }).done(function (data) {
         logger("CLIENT --- PLAY RESPONSE RECEIVED");
+        logger(typeof data);
         logger(data);
+        let x = btoa(data);
+        logger("BASE64");
+        logger(x);
+        const blob = new Blob([data], {type: 'audio/mpeg'});
+        logger(blob);
+        const blobUrl = URL.createObjectURL(blob);
+        logger(blobUrl);
+
         CURRENT.howl = new Howl({
           src: data,
           html5: true,

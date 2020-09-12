@@ -45,9 +45,20 @@ module.exports = function (app) {
   app.get('/play', function (req, res) {
     logger(req.query.url);
     const test_url = "https://soundcloud.com/crayyan/jump";
+    let readableStream;
+    readableStream.on('end', () => {
+      res.end('Goodbye\n');
+    });
+    //res.writeHead(200, {'Content-Type': 'audio/mpeg'});
     scdl.download(test_url)
-        .then(stream => stream.pipe(res))
-        .catch(err => logger(err));
+        .then(stream => {
+          readableStream = stream;
+          readableStream.pipe(res);
+        })
+        .catch(err => {
+          readableStream.destroy();
+          logger(err)
+        });
     // scdl.getInfo(req.query.url)
     //     .then(result => res.json({info: result}))
     //     .catch(result => logger(result));
