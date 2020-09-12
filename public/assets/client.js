@@ -28,18 +28,16 @@ $(document).ready(() => {
         data: {url: CURRENT.url}
       }).done(function (data) {
         logger("CLIENT --- PLAY RESPONSE RECEIVED");
-        logger(typeof data);
-        logger(data);
-        let x = btoa(data);
-        logger("BASE64");
-        logger(x);
-        const blob = new Blob([data], {type: 'audio/mpeg'});
-        logger(blob);
-        const blobUrl = URL.createObjectURL(blob);
-        logger(blobUrl);
+        let streamLink = window.location.href.split('/').slice(0, 3).join('/');
+        streamLink = streamLink.concat("/play?url=").concat(CURRENT.url);
+        logger(streamLink);
+
+        // for html
+        //$("#player").attr("src",
+        // "http://localhost:8000/play?url=https://soundcloud.com/meojoe/cant-breakup-girl-cant-breakaway-boy-leessang-jung-in");
 
         CURRENT.howl = new Howl({
-          src: data,
+          src: streamLink,
           html5: true,
           autoUnlock: true,
           autoSuspend: true,
@@ -52,7 +50,6 @@ $(document).ready(() => {
           onplayerror: logger("AUDIO FAILED TO PLAY"),
           // TODO onend: doSomething()
         });
-        // logger(data.stream);
       }).fail(function () {
         alert("A streaming error occurred. Please check your internet" +
             " connection and try again.");

@@ -21,9 +21,9 @@ function getId() {
 
 // Checks if a given JSON track info obj is acceptable (not empty + selection)
 function passCriteria(trackObj) {
-  logger("POLICY IS: ");
+  //logger("POLICY IS: ");
   const policy = trackObj.policy;
-  logger(policy);
+  //logger(policy);
   // If legal issues, only allow policy "ALLOW"
   return trackObj && trackObj.public &&
       (policy.localeCompare("SNIP") !== 0) &&
@@ -46,19 +46,28 @@ module.exports = function (app) {
     logger(req.query.url);
     const test_url = "https://soundcloud.com/crayyan/jump";
     let readableStream;
-    readableStream.on('end', () => {
-      res.end('Goodbye\n');
-    });
+
+    //scdl.download(test_url).then(stream =>
+    // stream.pipe(fs.createWriteStream("audio.mp3")));
     //res.writeHead(200, {'Content-Type': 'audio/mpeg'});
-    scdl.download(test_url)
-        .then(stream => {
-          readableStream = stream;
-          readableStream.pipe(res);
-        })
-        .catch(err => {
-          readableStream.destroy();
-          logger(err)
-        });
+    logger(req);
+    logger(__dirname);
+    const src = fs.createReadStream('audio.mp3');
+    src.pipe(res);
+
+    // scdl.download(test_url)
+    //     .then(stream => {
+    //       readableStream = stream;
+    //       // readableStream.on('end', () => {
+    //       //   res.end('Goodbye\n');
+    //       // });
+    //       readableStream.pipe(res);
+    //     })
+    //     .catch(err => {
+    //       readableStream.destroy();
+    //       logger(err)
+    //     });
+
     // scdl.getInfo(req.query.url)
     //     .then(result => res.json({info: result}))
     //     .catch(result => logger(result));
@@ -102,7 +111,7 @@ module.exports = function (app) {
     //pot_tracks[0] = 123456789; // TODO remove this
     //pot_tracks.map(() => getId());
     logger("ARRAY:");
-    pot_tracks.forEach(e => logger(e));
+    //pot_tracks.forEach(e => logger(e));
 
     // TODO MAJOR ::::: handle all duds case
     scdl.getTrackInfoByID(pot_tracks)
