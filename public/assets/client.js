@@ -13,10 +13,13 @@ function logger(msg) {
 $(document).ready(() => {
   alert("Hi, jQuery is enabled");
 
-  const updateDom = (title, permalink_url, artist) => {
-    $("#title").text(title);
-    $("#artist").text(artist);
-    $("#track_url").attr("href", permalink_url);
+  // TODO pointless to pass args
+  const updateDom = () => {
+    $("#title").text(CURRENT.title);
+    $("#artist").text(CURRENT.artist);
+    $("#track_url").attr("href", CURRENT.url);
+    // for html
+    $("#player").attr("src", CURRENT.stream);
   };
 
   const playTrackhandler = () => {
@@ -31,8 +34,6 @@ $(document).ready(() => {
     streamLink = streamLink.concat("/play?url=").concat(CURRENT.url);
     logger(streamLink);
 
-    // for html
-    $("#player").attr("src", streamLink);
 
     // if (!CURRENT.howl) { // track has NOT been loaded before, ergo load
     //   logger("CLIENT --- LOADING TRACK");
@@ -94,7 +95,7 @@ $(document).ready(() => {
         logger(CACHE.length + " TRACKS IN CACHE");
         logger("CACHE CONTAINS:");
         logger(CACHE);
-        updateDom(CURRENT.title, CURRENT.url, CURRENT.artist);
+        updateDom();
 
         $("#loading_icon").toggle();
         $("#next").prop('disabled', false);
@@ -112,7 +113,7 @@ $(document).ready(() => {
       logger(CACHE.length + " TRACKS IN CACHE");
       logger("CACHE CONTAINS:");
       logger(CACHE);
-      updateDom(CURRENT.title, CURRENT.url, CURRENT.artist)
+      updateDom();
       //$("#next").prop('disabled', false);
     }
   }
