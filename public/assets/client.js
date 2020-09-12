@@ -45,7 +45,7 @@ $(document).ready(() => {
     //     html5: true,
     //     autoUnlock: true,
     //     autoSuspend: true,
-    //     format: ['mp3', 'aac'], // TODO could be an issue
+    //     format: ['mp3'], // TODO could be an issue
     //     //autoplay: true,
     //     volume: 1.0,
     //     loop: false,

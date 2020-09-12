@@ -55,7 +55,7 @@ module.exports = function (app) {
     // const src = fs.createReadStream('audio.mp3');
     // src.pipe(res);
 
-    scdl.download(req.query.url)
+    scdl.downloadFormat(req.query.url, 'audio/mpeg')
         .then(stream => {
           readableStream = stream;
           // readableStream.on('end', () => {
