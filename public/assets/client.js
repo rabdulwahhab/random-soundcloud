@@ -11,7 +11,7 @@ function logger(msg) {
 }
 
 $(document).ready(() => {
-  alert("Hi, jQuery is enabled");
+  //alert("Hi, jQuery is enabled");
 
   // TODO pointless to pass args
   const updateDom = () => {
@@ -22,6 +22,7 @@ $(document).ready(() => {
     $("#player").attr("src", CURRENT.stream);
   };
 
+  // OBSOLETE
   const playTrackhandler = () => {
     logger("clicked play button");
     if (!CURRENT) {
@@ -66,12 +67,12 @@ $(document).ready(() => {
     // if (PLAYING) {
     //   CURRENT.howl.stop();
     // }
+    $("#loading_icon").fadeToggle(1500);
 
     // Make request for more tracks
     if (CACHE.length <= 7) { // TODO define threshold
       logger("CLIENT --- MAKING REQUESTS");
       $("#next").prop('disabled', true);
-      $("#loading_icon").fadeIn(2000);
       // TODO stream param for howler???
       $.ajax({
         type: "GET",
@@ -113,6 +114,7 @@ $(document).ready(() => {
       logger(CACHE.length + " TRACKS IN CACHE");
       logger("CACHE CONTAINS:");
       logger(CACHE);
+      $("#loading_icon").toggle();
       updateDom();
       //$("#next").prop('disabled', false);
     }
@@ -141,4 +143,7 @@ $(document).ready(() => {
 
   // Handle back button
   $("#back").click(backTrackHandler);
+
+  // Start
+  nextTrackHandler();
 });
