@@ -62,9 +62,9 @@ $(document).ready(() => {
 
   const nextTrackHandler = () => {
     logger("clicked next button");
-    if (PLAYING) {
-      CURRENT.howl.stop();
-    }
+    // if (PLAYING) {
+    //   CURRENT.howl.stop();
+    // }
 
     // Make request for more tracks
     if (CACHE.length <= 7) { // TODO define threshold

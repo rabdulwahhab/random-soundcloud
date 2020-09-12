@@ -46,57 +46,16 @@ module.exports = function (app) {
     logger(req.query.url);
     //const test_url = "https://soundcloud.com/crayyan/jump";
     let readableStream;
-
     res.writeHead(200, {'Content-Type': 'audio/mpeg'});
-    logger("REQUEST IS: ");
-    logger(req);
-    logger(req.originalUrl);
-    logger(__dirname);
-    // const src = fs.createReadStream('audio.mp3');
-    // src.pipe(res);
-
     scdl.downloadFormat(req.query.url, 'audio/mpeg')
         .then(stream => {
           readableStream = stream;
-          // readableStream.on('end', () => {
-          //   res.end('Goodbye\n');
-          // });
           readableStream.pipe(res);
         })
         .catch(err => {
           readableStream.destroy();
           logger(err)
         });
-
-    // scdl.getInfo(req.query.url)
-    //     .then(result => res.json({info: result}))
-    //     .catch(result => logger(result));
-    // scdl.download(req.query.url)
-    //     .then(stream => {
-    //       const reader = stream.getReader();
-    //       return new ReadableStream({
-    //         start(controller) {
-    //           return pump();
-    //           function pump() {
-    //             return reader.read().then(({ done, value }) => {
-    //               // When no more data needs to be consumed, close the stream
-    //               if (done) {
-    //                 controller.close();
-    //                 return;
-    //               }
-    //               // Enqueue the next data chunk into our target stream
-    //               controller.enqueue(value);
-    //               return pump();
-    //             });
-    //           }
-    //         }
-    //       })
-    //     })
-    //     .then(stream => new Response(stream))
-    //     .then(response => response.blob())
-    //     .then(blob => URL.createObjectURL(blob))
-    //     .then(url => res.json({stream: url}))
-    //     .catch(err => logger(err));
   });
 
   app.get('/next', async function (req, res) {
@@ -104,28 +63,22 @@ module.exports = function (app) {
     //scdl.download(test_url).then(stream => stream.pipe(fs.createWriteStream("audio.mp3")))
     // Number of bulk requests to make
     const NUM_REQUESTS = req.query.numRequests;
+    logger("NUM_REQ: " + NUM_REQUESTS);
     let pot_tracks = [];
     for (let j = 0; j < NUM_REQUESTS; ++j) {
       pot_tracks.push(getId());
     }
-    //pot_tracks[0] = 123456789; // TODO remove this
-    //pot_tracks.map(() => getId());
-    logger("ARRAY:");
-    //pot_tracks.forEach(e => logger(e));
 
     // TODO MAJOR ::::: handle all duds case
     scdl.getTrackInfoByID(pot_tracks)
         .then(result => {
-          //logger("RESULT FROM PROMISE ----");
-          //logger(result);
           let trackObjs = result.filter(passCriteria);
           trackObjs = trackObjs.map((obj) => {
-            // TODO add formatted streamlink param
             return {
               title: obj.title,
               artist: obj.user.username,
               url: obj.permalink_url,
-              howl: null
+              stream: req.headers.referer.concat("play?url=").concat(obj.permalink_url)
             };
           })
           logger("TRACK OBJS ------");
