@@ -49,24 +49,24 @@ module.exports = function (app) {
 
     //scdl.download(test_url).then(stream =>
     // stream.pipe(fs.createWriteStream("audio.mp3")));
-    //res.writeHead(200, {'Content-Type': 'audio/mpeg'});
-    logger(req);
+    res.writeHead(200, {'Content-Type': 'audio/mpeg'});
+    //logger(req);
     logger(__dirname);
-    const src = fs.createReadStream('audio.mp3');
-    src.pipe(res);
+    // const src = fs.createReadStream('audio.mp3');
+    // src.pipe(res);
 
-    // scdl.download(test_url)
-    //     .then(stream => {
-    //       readableStream = stream;
-    //       // readableStream.on('end', () => {
-    //       //   res.end('Goodbye\n');
-    //       // });
-    //       readableStream.pipe(res);
-    //     })
-    //     .catch(err => {
-    //       readableStream.destroy();
-    //       logger(err)
-    //     });
+    scdl.download(req.query.url)
+        .then(stream => {
+          readableStream = stream;
+          // readableStream.on('end', () => {
+          //   res.end('Goodbye\n');
+          // });
+          readableStream.pipe(res);
+        })
+        .catch(err => {
+          readableStream.destroy();
+          logger(err)
+        });
 
     // scdl.getInfo(req.query.url)
     //     .then(result => res.json({info: result}))
