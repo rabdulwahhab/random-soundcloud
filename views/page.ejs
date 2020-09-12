@@ -1,24 +1,33 @@
 <html lang="en">
 <head>
     <title>Random Soundcloud</title>
-    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/assets/script.js"></script>
-    <link href="/assets/style.css" rel="stylesheet" type="text/css">
+    <script src="../assets/client.js"></script>
+    <link href="../assets/style.css" rel="stylesheet" type="text/css">
+    <script src="../assets/howler.js"></script>
 </head>
 
 <body>
 <div class="center">
     <h2 id="title"><%= track.title %></h2>
     <h3 id="artist"><%= track.artist %></h3>
-    <h4><a href="<%= track.url %>" id="track_url" target="_blank"> Im a link </a></h4>
-    <button id="back">back</button>
-    <button id="play">play</button>
-    <button id="next">next</button>
+    <h4><a href="<%= track.url %>" id="track_url" target="_blank"> Im a
+            link </a></h4>
+    <div id="radio">
+        <audio id="player" controls="controls" src=""
+               type="audio/mpeg" autoplay=true>
+            Your browser does not support the audio player :-(
+        </audio>
+    </div>
     <br>
+    <button id="back">back</button>
+    <!--    <button id="play">play</button>-->
+    <button id="next">next</button>
     <div id="loading_icon" class="loading">
-        <img src="/assets/sc_loading.gif" alt="loading" style="width: 2%; height: 4%;">
+        <img src="/assets/sc_loading.gif" alt="loading"
+             style="width: 2%; height: 4%;">
     </div>
 </div>
 
