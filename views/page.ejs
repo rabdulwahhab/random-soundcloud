@@ -15,16 +15,16 @@
     <h3 id="artist"><%= track.artist %></h3>
     <h4><a href="<%= track.url %>" id="track_url" target="_blank"> Im a
             link </a></h4>
-    <button id="back">back</button>
-<!--    <button id="play">play</button>-->
-    <button id="next">next</button>
-    <br>
     <div id="radio">
         <audio id="player" controls="controls" src=""
                type="audio/mpeg" autoplay=true>
             Your browser does not support the audio player :-(
         </audio>
     </div>
+    <br>
+    <button id="back">back</button>
+    <!--    <button id="play">play</button>-->
+    <button id="next">next</button>
     <div id="loading_icon" class="loading">
         <img src="/assets/sc_loading.gif" alt="loading"
              style="width: 2%; height: 4%;">
