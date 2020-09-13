@@ -3,7 +3,8 @@
 let NUM_REQUESTS = 50;
 const CACHE = [];
 const HISTORY = [null, null, null, null, null];
-let CURRENT = null;
+let CURRENT;
+let AUDIO;
 let PLAYING = false;
 
 function logger(msg) {
@@ -13,57 +14,37 @@ function logger(msg) {
 $(document).ready(() => {
   //alert("Hi, jQuery is enabled");
 
-  // TODO pointless to pass args
   const updateDom = () => {
     $("#title").text(CURRENT.title);
     $("#artist").text(CURRENT.artist);
     $("#track_url").attr("href", CURRENT.url);
     // for html
-    $("#player").attr("src", CURRENT.stream);
+    AUDIO.src = CURRENT.stream;
+    //$("#player").attr("src", CURRENT.stream);
   };
 
-  // OBSOLETE
+  logger($('#play').attr('id'));
+
   const playTrackhandler = () => {
     logger("clicked play button");
     if (!CURRENT) {
-      // TODO either get next or nothing
-      //clickNextHandler();
       return;
     }
+    AUDIO.play();
+    $('#play').text('pause');
+    PLAYING = true;
+  };
 
-    let streamLink = window.location.href.split('/').slice(0, 3).join('/');
-    streamLink = streamLink.concat("/play?url=").concat(CURRENT.url);
-    logger(streamLink);
-
-
-    // if (!CURRENT.howl) { // track has NOT been loaded before, ergo load
-    //   logger("CLIENT --- LOADING TRACK");
-    //   let streamLink = window.location.href.split('/').slice(0, 3).join('/');
-    //   streamLink = streamLink.concat("/play?url=").concat(CURRENT.url);
-    //   logger(streamLink);
-    //
-    //   CURRENT.howl = new Howl({
-    //     src: streamLink,
-    //     html5: true,
-    //     autoUnlock: true,
-    //     autoSuspend: true,
-    //     format: ['mp3'], // TODO could be an issue
-    //     //autoplay: true,
-    //     volume: 1.0,
-    //     loop: false,
-    //     preload: true,
-    //     onloaderror: logger("AUDIO FAILED TO LOAD"),
-    //     onplayerror: logger("AUDIO FAILED TO PLAY"),
-    //     onend: logger("TRACK ENDED")
-    //   });
-    // } else {
-    //   CURRENT.howl.play();
-    //   PLAYING = true;
-    // }
+  const pauseTrackHandler = () => {
+    logger("clicked pause button");
+    AUDIO.pause();
+    $('#play').text('play');
+    PLAYING = false;
   };
 
   const nextTrackHandler = () => {
     logger("clicked next button");
+    logger($('#next').attr('id'));
     // if (PLAYING) {
     //   CURRENT.howl.stop();
     // }
@@ -73,7 +54,6 @@ $(document).ready(() => {
     if (CACHE.length <= 7) { // TODO define threshold
       logger("CLIENT --- MAKING REQUESTS");
       $("#next").prop('disabled', true);
-      // TODO stream param for howler???
       $.ajax({
         type: "GET",
         url: "/next",
@@ -135,8 +115,20 @@ $(document).ready(() => {
     }
   };
 
+  // init
+  AUDIO = new Audio();
+  if (!AUDIO.canPlayType('audio/mpeg;')) {
+    alert("It appears your browser is too outdated to handle HTML audio" +
+        " :-(\n\nPlease consider upgrading to use this app.");
+    return;
+  }
+  AUDIO.autoplay = true;
+  AUDIO.addEventListener('ended', nextTrackHandler);
+
   // Handle play button
-  $("#play").click(playTrackhandler);
+  $("#play").click(() => {
+    !PLAYING ? playTrackhandler() : pauseTrackHandler();
+  });
 
   // Handle forward button
   $("#next").click(nextTrackHandler);
