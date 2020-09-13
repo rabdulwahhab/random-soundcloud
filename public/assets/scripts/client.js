@@ -6,7 +6,7 @@ const HISTORY = [null, null, null, null, null];
 let CURRENT = null;
 let AUDIO;
 let PLAYING = false;
-
+window.onplay = () => logger("PLAYING");
 function logger(msg) {
   console.log(msg);
 }
@@ -138,5 +138,5 @@ $(document).ready(() => {
   // Start
   nextTrackHandler();
 
-  window.onplay = () => logger("PLAYING");
+
 });

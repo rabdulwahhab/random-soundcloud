@@ -23,12 +23,12 @@ function getId() {
 function passCriteria(trackObj) {
   //logger("POLICY IS: ");
   const policy = trackObj.policy;
-  logger(trackObj);
+  //logger(trackObj);
   //logger(policy);
   // If legal issues, only allow policy "ALLOW"
   return trackObj && trackObj.public &&
       (policy.localeCompare("SNIP") !== 0) &&
-      (trackObj.embeddable_by.localeCompare('all' === 0)) &&
+      (trackObj.embeddable_by.localeCompare("all") === 0) &&
       (Math.round(trackObj.duration / 1000 / 60) <= MAX_DURATION) &&
       (trackObj.playback_count <= MAX_PLAYS);
 }
@@ -75,6 +75,8 @@ module.exports = function (app) {
     scdl.getTrackInfoByID(pot_tracks)
         .then(result => {
           let trackObjs = result.filter(passCriteria);
+          //logger("FILTERED:");
+         // logger(trackObjs);
           trackObjs = trackObjs.map((obj) => {
             let stream = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/";
             stream = stream.concat(obj.id);
