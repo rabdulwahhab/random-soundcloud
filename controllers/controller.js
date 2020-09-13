@@ -37,7 +37,7 @@ module.exports = function (app) {
 
   // ROUTES
   app.get('/', function (req, res) {
-    const trackObj = {title: "Random Soundcloud Tracks", artist: "", url: ""};
+    //const trackObj = {title: "Random Soundcloud Tracks", artist: "", url: ""};
     res.render('page');
     //res.render('page', {track: trackObj}); how to pass data
     // view name. auto searches in views folder which has been mapped to public

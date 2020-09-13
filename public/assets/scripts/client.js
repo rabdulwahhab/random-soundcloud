@@ -1,9 +1,9 @@
 // Client-side script
 
-let NUM_REQUESTS = 50;
+let NUM_REQUESTS = 10;
 const CACHE = [];
 const HISTORY = [null, null, null, null, null];
-let CURRENT;
+let CURRENT = null;
 let AUDIO;
 let PLAYING = false;
 
@@ -15,13 +15,15 @@ $(document).ready(() => {
   //alert("Hi, jQuery is enabled");
 
   const updateDom = () => {
-    $(".track").text(CURRENT.title).attr("title", CURRENT.title).attr("href", CURRENT.track_url);
-    $(".artist").text(CURRENT.artist).attr("title", CURRENT.artist).attr("href", CURRENT.artist_url);
-    // for html
-    // TODO sc player
-    $("#player").attr("src", CURRENT.stream);
-    //AUDIO.src = CURRENT.stream;
-    //$("#player").attr("src", CURRENT.stream);
+    if (CURRENT) {
+      $(".track").text(CURRENT.title).attr("title", CURRENT.title).attr("href", CURRENT.track_url);
+      $(".artist").text(CURRENT.artist).attr("title", CURRENT.artist).attr("href", CURRENT.artist_url);
+      // for html
+      // TODO sc player
+      $("#player").attr("src", CURRENT.stream);
+      //AUDIO.src = CURRENT.stream;
+      //$("#player").attr("src", CURRENT.stream);
+    }
   };
 
   logger($('#play').attr('id'));
@@ -82,7 +84,8 @@ $(document).ready(() => {
         $("#loading_icon").toggle();
         $("#next").prop('disabled', false);
       }).fail(function () {
-        alert("An error occurred. Please check your internet connection and try again.");
+        alert("An error occurred. Please check your internet connection and" +
+            " refresh the page.");
       });
     } else {
       logger("CLIENT --- GET NEXT TRACK FROM CACHE");
