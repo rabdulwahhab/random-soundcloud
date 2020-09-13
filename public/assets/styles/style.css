@@ -54,7 +54,7 @@ button {
     border-color: #cfcece;
     border-radius: 2px;
     cursor: pointer;
-    background-color: #ababab;
+    background-color: #b0b0b0;
 }
 
 button:hover {
@@ -151,6 +151,14 @@ button:active {
 @media only screen and (max-width: 500px) {
     .pageTitle {
         margin-bottom: 15%;
-        font-size: 30px;
+        font-size: 32px;
+    }
+
+    .center {
+        max-width: 100%;
+    }
+
+    iframe#player {
+        min-width: 320px;
     }
 }
