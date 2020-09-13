@@ -1,5 +1,5 @@
 body {
-  background-image: url("cozycat.jpg");
+  background-image: url(../assets/images/cozycat.jpg);
 }
 
 .center {
@@ -25,4 +25,8 @@ img {
     font-family: 'Solway', serif;
     color: #eb9234;
     margin: 1% 2% 1% 2%;
+}
+
+button {
+    font-size: 20%;
 }
