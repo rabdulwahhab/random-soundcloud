@@ -1,5 +1,6 @@
 body {
-    background-image: url("../images/cozycat.jpg");
+    /*background-image: url("../images/cozycat.jpg");*/
+    background-color: white;
     background-repeat: no-repeat;
     background-size: 100%;
 }
@@ -47,8 +48,31 @@ img {
 }
 
 .bg-select {
-    width:200px;
+    width:12%;
     position: relative;
+    font-family: 'DM Mono', monospace;
+    /*bottom: 0;*/
+    /*right: 0;*/
+    /*margin-top: 8%;*/
+    /*position: fixed;*/
+    /*bottom: 0px;*/
+    /*right: 4px;*/
+    /*width: 300px;*/
+    /*border: 3px solid #73AD21;*/
+}
+
+.custom-select select {
+    display: none; /*hide original SELECT element: */
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #eb9234;
+    color: white;
+    text-align: center;
 }
 
 button {
@@ -111,6 +135,11 @@ button:active {
     .pageTitle {
         max-width: 100%;
     }
+
+    .bg-select {
+        top: 100%;
+        right: 0%;
+    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -118,11 +147,15 @@ button:active {
         margin-bottom: 15%;
         font-size: 35px;
     }
+
+    .bg-select {
+        top: 100%;
+        right: 0%;
+    }
 }
 
 @media only screen and (max-width: 500px) {
     .pageTitle {
-        margin-bottom: 15%;
         font-size: 32px;
     }
 
@@ -132,5 +165,10 @@ button:active {
 
     iframe#player {
         min-width: 320px;
+    }
+
+    .bg-select {
+        top: 100%;
+        right: 0%;
     }
 }
