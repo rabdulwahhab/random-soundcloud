@@ -29,7 +29,7 @@ function passCriteria(trackObj) {
   return trackObj && trackObj.public &&
       (policy.localeCompare("SNIP") !== 0) &&
       (trackObj.embeddable_by.localeCompare("all") === 0) &&
-      (Math.round(trackObj.duration / 1000 / 60) <= MAX_DURATION) &&
+      // (Math.round(trackObj.duration / 1000 / 60) <= MAX_DURATION) &&
       (trackObj.playback_count <= MAX_PLAYS);
 }
 
