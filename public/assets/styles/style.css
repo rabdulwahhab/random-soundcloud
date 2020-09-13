@@ -1,7 +1,26 @@
+body {
+    /*background-image: url("../images/cozycat.jpg");*/
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
 .center {
     text-align: center;
     margin: auto;
     width: 80em;
+    color: #cccccc;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                         supported by Chrome, Opera and Firefox */
 }
 
 img {
@@ -14,4 +33,136 @@ img {
     float: bottom;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.pageTitle {
+    font-family: 'DM Mono', monospace;
+    color: #ff7836;
+    margin: 1% 2% 1% 2%;
+    font-size: 55px;
+    margin-bottom: 7%;
+    text-shadow: 25px 25px #c8c7c7;
+    /* margin-left: 2%;
+    margin-right: 1%; */
+    text-align: left;
+}
+
+.bg-select {
+    width:10%;
+    position: relative;
+    font-family: 'DM Mono', monospace;
+    /*bottom: 0;*/
+    /*right: 0;*/
+    /*margin-top: 8%;*/
+    /*position: fixed;*/
+    /*bottom: 0px;*/
+    /*right: 4px;*/
+    /*width: 300px;*/
+    /*border: 3px solid #73AD21;*/
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ff7836;
+    color: white;
+    text-align: center;
+}
+
+button {
+    font-family: 'DM Mono', monospace;
+    font-size: 100%;
+    border: 1px;
+    border-style: outset;
+    border-color: #cfcece;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: #c8c7c7;
+}
+
+button:hover {
+    background-color: #dddddd
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
+@keyframes borealisBar {
+    0% {
+        left: 0%;
+        right: 100%;
+        width: 0%;
+    }
+    10% {
+        left: 0%;
+        right: 75%;
+        width: 25%;
+    }
+    90% {
+        right: 0%;
+        left: 75%;
+        width: 25%;
+    }
+    100% {
+        left: 100%;
+        right: 0%;
+        width: 0%;
+    }
+}
+
+
+@media only screen and (max-width: 1290px) {
+    body {
+        max-width: 100%;
+    }
+
+    .center {
+        max-width: 100%;
+    }
+
+    iframe#player {
+        min-width: 350px;
+
+    }
+
+    .pageTitle {
+        max-width: 100%;
+        margin-bottom: 7%;
+    }
+
+    .bg-select {
+        width: 10%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .pageTitle {
+        margin-bottom: 15%;
+        font-size: 35px;
+    }
+
+    .bg-select {
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .pageTitle {
+        font-size: 32px;
+    }
+
+    .center {
+        max-width: 100%;
+    }
+
+    iframe#player {
+        min-width: 320px;
+    }
+
+    .bg-select {
+        width: 30%;
+    }
 }

@@ -1,11 +1,13 @@
 // Client-side script
 
 let NUM_REQUESTS = 50;
+const THRESH = 7;
 const CACHE = [];
 const HISTORY = [null, null, null, null, null];
-let CURRENT;
+let CURRENT = null;
 let AUDIO;
 let PLAYING = false;
+window.onplay = () => logger("PLAYING");
 
 function logger(msg) {
   console.log(msg);
@@ -15,15 +17,12 @@ $(document).ready(() => {
   //alert("Hi, jQuery is enabled");
 
   const updateDom = () => {
-    $("#title").text(CURRENT.title);
-    $("#artist").text(CURRENT.artist);
-    $("#track_url").attr("href", CURRENT.url);
-    // for html
-    AUDIO.src = CURRENT.stream;
-    //$("#player").attr("src", CURRENT.stream);
+    if (CURRENT) {
+      $(".track").text(CURRENT.title).attr("title", CURRENT.title).attr("href", CURRENT.track_url);
+      $(".artist").text(CURRENT.artist).attr("title", CURRENT.artist).attr("href", CURRENT.artist_url);
+      $("#player").attr("src", CURRENT.stream);
+    }
   };
-
-  logger($('#play').attr('id'));
 
   const playTrackhandler = () => {
     logger("clicked play button");
@@ -48,11 +47,12 @@ $(document).ready(() => {
     // if (PLAYING) {
     //   CURRENT.howl.stop();
     // }
-    $("#loading_icon").fadeToggle(1500);
+    const loading_icon = $("#loading_icon");
 
     // Make request for more tracks
-    if (CACHE.length <= 7) { // TODO define threshold
+    if (CACHE.length <= THRESH) { // TODO define threshold
       logger("CLIENT --- MAKING REQUESTS");
+      loading_icon.fadeToggle(500);
       $("#next").prop('disabled', true);
       $.ajax({
         type: "GET",
@@ -77,11 +77,12 @@ $(document).ready(() => {
         logger("CACHE CONTAINS:");
         logger(CACHE);
         updateDom();
-
-        $("#loading_icon").toggle();
+        loading_icon.fadeToggle();
+        //$("#loading_icon").toggle();
         $("#next").prop('disabled', false);
       }).fail(function () {
-        alert("An error occurred. Please check your internet connection and try again.");
+        alert("An error occurred. Please check your internet connection and" +
+            " refresh the page.");
       });
     } else {
       logger("CLIENT --- GET NEXT TRACK FROM CACHE");
@@ -94,7 +95,6 @@ $(document).ready(() => {
       logger(CACHE.length + " TRACKS IN CACHE");
       logger("CACHE CONTAINS:");
       logger(CACHE);
-      $("#loading_icon").toggle();
       updateDom();
       //$("#next").prop('disabled', false);
     }
@@ -108,7 +108,7 @@ $(document).ready(() => {
     if (prev) {
       CURRENT = prev;
       HISTORY.unshift(null); // retain HISTORY size
-      updateDom(CURRENT.title, CURRENT.url, CURRENT.artist);
+      updateDom(CURRENT.title, CURRENT.track_url, CURRENT.artist);
     } else {
       logger("NO MORE TRACKS");
       HISTORY.unshift(null);
@@ -117,6 +117,7 @@ $(document).ready(() => {
 
   // init
   AUDIO = new Audio();
+  //TODO remove
   if (!AUDIO.canPlayType('audio/mpeg;')) {
     alert("It appears your browser is too outdated to handle HTML audio" +
         " :-(\n\nPlease consider upgrading to use this app.");
@@ -138,4 +139,44 @@ $(document).ready(() => {
 
   // Start
   nextTrackHandler();
+
+  // Choose environment
+  const bg = $("body");
+  $("#plain").on("click tap", () => {
+    bg.css("background-image", "none");
+    bg.css("background-color", "white");
+  });
+  $("#cozy").on("click tap", () => {
+    bg.css("background-image", "url('../assets/images/cozy.jpg')");
+    bg.css("background-position", "initial");
+  });
+  $("#cubicle").on("click tap", () => {
+    bg.css("background-image", "url('../assets/images/cubicle.jpg')");
+    bg.css("background-position", "center center");
+  });
+  $("#wealth").on("click tap", () => {
+    bg.css("background-image", "url('../assets/images/wealth.jpg')");
+    bg.css("background-position", "initial");
+  });
+  $("#water_cycle").on("click tap", () => {
+    bg.css("background-image", "url('../assets/images/water_cycle.jpg')");
+    bg.css("background-position", "initial");
+  });
+  $("#tropical").on("click tap", () => {
+    bg.css("background-image", "url('../assets/images/tropical.jpg')");
+    bg.css("background-position", "center center");
+  });
+  $("#brown").on("click tap", () => {
+    bg.css("background-image", "none");
+    bg.css("background-color", "#7B3933");
+  });
+  $("#corduroy1").on("click tap", () => {
+    bg.css("background-image", "url('../assets/images/corduroy1.jpg')")
+    bg.css("background-position", "initial");
+  });
+  $("#corduroy2").on("click tap", () => {
+    bg.css("background-image", "url('../assets/images/corduroy2.jpg')");
+    bg.css("background-position", "center center");
+  });
+
 });
