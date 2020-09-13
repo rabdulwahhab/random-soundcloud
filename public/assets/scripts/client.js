@@ -19,7 +19,8 @@ $(document).ready(() => {
     $(".artist").text(CURRENT.artist).attr("title", CURRENT.artist).attr("href", CURRENT.artist_url);
     // for html
     // TODO sc player
-    AUDIO.src = CURRENT.stream;
+    $("#player").attr("src", CURRENT.stream);
+    //AUDIO.src = CURRENT.stream;
     //$("#player").attr("src", CURRENT.stream);
   };
 

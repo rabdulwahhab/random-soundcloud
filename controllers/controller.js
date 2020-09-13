@@ -61,6 +61,7 @@ module.exports = function (app) {
     //scdl.download(test_url).then(stream => stream.pipe(fs.createWriteStream("audio.mp3")))
     // Number of bulk requests to make
     const NUM_REQUESTS = req.query.numRequests;
+    const color_code = "#ff5500";
     logger("NUM_REQ: " + NUM_REQUESTS);
     let pot_tracks = [];
     for (let j = 0; j < NUM_REQUESTS; ++j) {
@@ -72,13 +73,18 @@ module.exports = function (app) {
         .then(result => {
           let trackObjs = result.filter(passCriteria);
           trackObjs = trackObjs.map((obj) => {
+            let stream = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/";
+            stream = stream.concat(obj.id);
+            stream = stream.concat("&color=");
+            stream = stream.concat(encodeURIComponent(color_code));
+            stream = stream.concat("&auto_play=true&hide_related=true&show_comments=true&show_user=true &show_reposts=false&show_teaser=false&visual=true");
             return {
-              id: obj.id,
               title: obj.title,
               artist: obj.user.username,
               artist_url: obj.user.permalink_url,
               track_url: obj.permalink_url,
-              stream: req.headers.referer.concat("play?url=").concat(obj.permalink_url)
+              stream: stream
+              // req.headers.referer.concat("play?url=").concat(obj.permalink_url)
             };
           })
           logger("TRACK OBJS ------");
