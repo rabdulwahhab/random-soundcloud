@@ -118,6 +118,7 @@ $(document).ready(() => {
 
   // init
   AUDIO = new Audio();
+  //TODO remove
   if (!AUDIO.canPlayType('audio/mpeg;')) {
     alert("It appears your browser is too outdated to handle HTML audio" +
         " :-(\n\nPlease consider upgrading to use this app.");
