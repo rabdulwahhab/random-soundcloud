@@ -1,5 +1,5 @@
 body {
-  background-image: url(../assets/images/cozycat.jpg);
+  background-image: url("../images/cozycat.jpg");
 }
 
 .center {
@@ -28,5 +28,7 @@ img {
 }
 
 button {
-    font-size: 20%;
+    font-size: 90%;
+    border: 1%;
+    border-color: black;
 }
