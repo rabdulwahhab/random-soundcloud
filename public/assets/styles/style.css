@@ -1,3 +1,7 @@
+body {
+  background-image: url("cozycat.jpg");
+}
+
 .center {
     text-align: center;
     margin: auto;
@@ -15,4 +19,10 @@ img {
     float: bottom;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.pageTitle {
+    font-family: 'Solway', serif;
+    color: #eb9234;
+    margin: 1% 2% 1% 2%;
 }
