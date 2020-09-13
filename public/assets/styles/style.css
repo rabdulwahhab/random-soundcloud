@@ -9,6 +9,16 @@ body {
     color: green;
 }
 
+.noselect {
+      -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+         -khtml-user-select: none; /* Konqueror HTML */
+           -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome, Opera and Firefox */
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -22,9 +32,15 @@ img {
 }
 
 .pageTitle {
-    font-family: 'Solway', serif;
+    font-family: 'Jomolhari', serif;
     color: #eb9234;
     margin: 1% 2% 1% 2%;
+    font-size: 55px;
+    margin-bottom: 0.5%;
+    text-shadow: 2px 2px #708090;
+    /* margin-left: 2%;
+    margin-right: 1%; */
+    text-align: left;
 }
 
 button {
