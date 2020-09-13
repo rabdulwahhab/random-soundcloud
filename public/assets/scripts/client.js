@@ -15,10 +15,10 @@ $(document).ready(() => {
   //alert("Hi, jQuery is enabled");
 
   const updateDom = () => {
-    $("#title").text(CURRENT.title);
-    $("#artist").text(CURRENT.artist);
-    $("#track_url").attr("href", CURRENT.url);
+    $(".track").text(CURRENT.title).attr("title", CURRENT.title).attr("href", CURRENT.track_url);
+    $(".artist").text(CURRENT.artist).attr("title", CURRENT.artist).attr("href", CURRENT.artist_url);
     // for html
+    // TODO sc player
     AUDIO.src = CURRENT.stream;
     //$("#player").attr("src", CURRENT.stream);
   };
@@ -108,7 +108,7 @@ $(document).ready(() => {
     if (prev) {
       CURRENT = prev;
       HISTORY.unshift(null); // retain HISTORY size
-      updateDom(CURRENT.title, CURRENT.url, CURRENT.artist);
+      updateDom(CURRENT.title, CURRENT.track_url, CURRENT.artist);
     } else {
       logger("NO MORE TRACKS");
       HISTORY.unshift(null);

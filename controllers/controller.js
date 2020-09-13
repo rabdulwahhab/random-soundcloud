@@ -73,9 +73,11 @@ module.exports = function (app) {
           let trackObjs = result.filter(passCriteria);
           trackObjs = trackObjs.map((obj) => {
             return {
+              id: obj.id,
               title: obj.title,
               artist: obj.user.username,
-              url: obj.permalink_url,
+              artist_url: obj.user.permalink_url,
+              track_url: obj.permalink_url,
               stream: req.headers.referer.concat("play?url=").concat(obj.permalink_url)
             };
           })
