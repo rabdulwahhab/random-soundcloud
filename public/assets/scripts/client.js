@@ -1,6 +1,7 @@
 // Client-side script
 
 let NUM_REQUESTS = 50;
+const THRESH = 7;
 const CACHE = [];
 const HISTORY = [null, null, null, null, null];
 let CURRENT = null;
@@ -48,7 +49,7 @@ $(document).ready(() => {
     $("#loading_icon").fadeToggle(1500);
 
     // Make request for more tracks
-    if (CACHE.length <= 7) { // TODO define threshold
+    if (CACHE.length <= THRESH) { // TODO define threshold
       logger("CLIENT --- MAKING REQUESTS");
       $("#next").prop('disabled', true);
       $.ajax({

@@ -69,7 +69,6 @@ module.exports = function (app) {
     for (let j = 0; j < NUM_REQUESTS; ++j) {
       pot_tracks.push(getId());
     }
-    pot_tracks[0] = 83836326;
 
     // TODO MAJOR ::::: handle all duds case
     scdl.getTrackInfoByID(pot_tracks)
