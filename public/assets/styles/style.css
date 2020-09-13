@@ -1,5 +1,7 @@
 body {
   background-image: url("../images/cozycat.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .center {
@@ -50,6 +52,10 @@ button {
 }
 
 @media only screen and (max-width: 1290px) {
+  body {
+    max-width: 100%;
+  }
+
   .center {
     max-width: 100%;
   }
