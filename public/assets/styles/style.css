@@ -36,7 +36,7 @@ img {
     color: #eb9234;
     margin: 1% 2% 1% 2%;
     font-size: 55px;
-    margin-bottom: 0.5%;
+    margin-bottom: 5%;
     text-shadow: 2px 2px #708090;
     /* margin-left: 2%;
     margin-right: 1%; */
@@ -58,4 +58,11 @@ button {
     min-width: 350px;
 
   }
+}
+
+@media only screen and (max-width: 600px) {
+    .pageTitle {
+      margin-bottom: 10%;
+      font-size: 40px;
+    }
 }
