@@ -46,11 +46,12 @@ $(document).ready(() => {
     // if (PLAYING) {
     //   CURRENT.howl.stop();
     // }
-    $("#loading_icon").fadeToggle(1500);
+    const loading_icon = $("#loading_icon");
 
     // Make request for more tracks
     if (CACHE.length <= THRESH) { // TODO define threshold
       logger("CLIENT --- MAKING REQUESTS");
+      loading_icon.fadeToggle(500);
       $("#next").prop('disabled', true);
       $.ajax({
         type: "GET",
@@ -75,8 +76,8 @@ $(document).ready(() => {
         logger("CACHE CONTAINS:");
         logger(CACHE);
         updateDom();
-
-        $("#loading_icon").toggle();
+        loading_icon.fadeToggle();
+        //$("#loading_icon").toggle();
         $("#next").prop('disabled', false);
       }).fail(function () {
         alert("An error occurred. Please check your internet connection and" +
@@ -93,7 +94,6 @@ $(document).ready(() => {
       logger(CACHE.length + " TRACKS IN CACHE");
       logger("CACHE CONTAINS:");
       logger(CACHE);
-      $("#loading_icon").toggle();
       updateDom();
       //$("#next").prop('disabled', false);
     }

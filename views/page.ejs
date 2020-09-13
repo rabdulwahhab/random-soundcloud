@@ -1,6 +1,7 @@
 <html lang="en">
 <head>
     <title>Random Soundcloud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="../assets/images/favicon.ico"
           type="image/x-icon">
     <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
@@ -40,11 +41,26 @@
         <button id="next">next >></button>
     </div>
     <br>
-    <div id="loading_icon" class="loading">
-        <div class="loaderBar"></div>
-        <!-- <img src="/assets/images/sc_loading.gif" alt="loading"
-             style="width: 2%; height: 4%;"> -->
-    </div>
+    <img id="loading_icon" src="/assets/images/sc_loading.gif"
+         hidden=true alt="loading"
+         style="width: 2%; height: 4%;">
+</div>
+<div class="bg-select">
+    <select>
+        <option value="0">Select car:</option>
+        <option value="1">Audi</option>
+        <option value="2">BMW</option>
+        <option value="3">Citroen</option>
+        <option value="4">Ford</option>
+        <option value="5">Honda</option>
+        <option value="6">Jaguar</option>
+        <option value="7">Land Rover</option>
+        <option value="8">Mercedes</option>
+        <option value="9">Mini</option>
+        <option value="10">Nissan</option>
+        <option value="11">Toyota</option>
+        <option value="12">Volvo</option>
+    </select>
 </div>
 
 </body>
