@@ -23,10 +23,12 @@ function getId() {
 function passCriteria(trackObj) {
   //logger("POLICY IS: ");
   const policy = trackObj.policy;
+  logger(trackObj);
   //logger(policy);
   // If legal issues, only allow policy "ALLOW"
   return trackObj && trackObj.public &&
       (policy.localeCompare("SNIP") !== 0) &&
+      (trackObj.embeddable_by.localeCompare('all' === 0)) &&
       (Math.round(trackObj.duration / 1000 / 60) <= MAX_DURATION) &&
       (trackObj.playback_count <= MAX_PLAYS);
 }
@@ -67,6 +69,7 @@ module.exports = function (app) {
     for (let j = 0; j < NUM_REQUESTS; ++j) {
       pot_tracks.push(getId());
     }
+    pot_tracks[0] = 83836326;
 
     // TODO MAJOR ::::: handle all duds case
     scdl.getTrackInfoByID(pot_tracks)

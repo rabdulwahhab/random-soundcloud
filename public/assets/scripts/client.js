@@ -1,6 +1,6 @@
 // Client-side script
 
-let NUM_REQUESTS = 10;
+let NUM_REQUESTS = 50;
 const CACHE = [];
 const HISTORY = [null, null, null, null, null];
 let CURRENT = null;
@@ -18,15 +18,9 @@ $(document).ready(() => {
     if (CURRENT) {
       $(".track").text(CURRENT.title).attr("title", CURRENT.title).attr("href", CURRENT.track_url);
       $(".artist").text(CURRENT.artist).attr("title", CURRENT.artist).attr("href", CURRENT.artist_url);
-      // for html
-      // TODO sc player
       $("#player").attr("src", CURRENT.stream);
-      //AUDIO.src = CURRENT.stream;
-      //$("#player").attr("src", CURRENT.stream);
     }
   };
-
-  logger($('#play').attr('id'));
 
   const playTrackhandler = () => {
     logger("clicked play button");
@@ -143,4 +137,6 @@ $(document).ready(() => {
 
   // Start
   nextTrackHandler();
+
+  window.onplay = () => logger("PLAYING");
 });
