@@ -38,13 +38,13 @@ module.exports = function (app) {
   // ROUTES
   app.get('/', function (req, res) {
     const trackObj = {title: "Random Soundcloud Tracks", artist: "", url: ""};
-    res.render('page', {track: trackObj});
+    res.render('page');
+    //res.render('page', {track: trackObj}); how to pass data
     // view name. auto searches in views folder which has been mapped to public
   });
 
   app.get('/play', function (req, res) {
     logger(req.query.url);
-    //const test_url = "https://soundcloud.com/crayyan/jump";
     res.writeHead(200, {'Content-Type': 'audio/mpeg'});
     scdl.downloadFormat(req.query.url, 'audio/mpeg')
         .then(stream => {
