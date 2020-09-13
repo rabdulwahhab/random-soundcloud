@@ -37,11 +37,11 @@ img {
 
 .pageTitle {
     font-family: 'DM Mono', monospace;
-    color: #eb9234;
+    color: #ff7836;
     margin: 1% 2% 1% 2%;
     font-size: 55px;
     margin-bottom: 5%;
-    text-shadow: 15px 15px #708090;
+    text-shadow: 25px 25px #8a8f96;
     /* margin-left: 2%;
     margin-right: 1%; */
     text-align: left;
@@ -61,16 +61,12 @@ img {
     /*border: 3px solid #73AD21;*/
 }
 
-.custom-select select {
-    display: none; /*hide original SELECT element: */
-}
-
 .footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #eb9234;
+    background-color: #ff7836;
     color: white;
     text-align: center;
 }
@@ -134,11 +130,11 @@ button:active {
 
     .pageTitle {
         max-width: 100%;
+        margin-bottom: 10%;
     }
 
     .bg-select {
-        top: 100%;
-        right: 0%;
+        width: 20%;
     }
 }
 
@@ -149,8 +145,7 @@ button:active {
     }
 
     .bg-select {
-        top: 100%;
-        right: 0%;
+        width: 30%;
     }
 }
 
@@ -168,7 +163,6 @@ button:active {
     }
 
     .bg-select {
-        top: 100%;
-        right: 0%;
+        width: 30%;
     }
 }
