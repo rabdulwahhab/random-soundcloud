@@ -159,6 +159,10 @@ $(document).ready(() => {
     bg.css("background-image", "url('../assets/images/wealth.jpg')");
     bg.css("background-position", "initial");
   });
+  $("#clouds").on("click tap", () => {
+    bg.css("background-image", "url('../assets/images/clouds.jpg')");
+    bg.css("background-position", "center center");
+  });
   $("#water_cycle").on("click tap", () => {
     bg.css("background-image", "url('../assets/images/water_cycle.jpg')");
     bg.css("background-position", "initial");
