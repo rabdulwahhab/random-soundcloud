@@ -140,6 +140,7 @@ $(document).ready(() => {
   // Start
   nextTrackHandler();
 
+  // TODO move to file
   // Choose environment
   const bg = $("body");
   $("#plain").on("click tap", () => {
@@ -178,5 +179,11 @@ $(document).ready(() => {
     bg.css("background-image", "url('../assets/images/corduroy2.jpg')");
     bg.css("background-position", "center center");
   });
+
+  // show bg selector if not on mobile (default hidden)
+  const onMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+  if (!onMobile) {
+    $(".bg-select").show();
+  }
 
 });

@@ -146,6 +146,7 @@ button:active {
 
     .bg-select {
         width: 30%;
+        display: none;
     }
 }
 
@@ -164,5 +165,6 @@ button:active {
 
     .bg-select {
         width: 30%;
+        display: none;
     }
 }
