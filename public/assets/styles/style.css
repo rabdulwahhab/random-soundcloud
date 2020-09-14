@@ -47,8 +47,12 @@ img {
     text-align: left;
 }
 
+h1:hover {
+    cursor: default;
+}
+
 .bg-select {
-    width:10%;
+    width: 10%;
     position: relative;
     font-family: 'DM Mono', monospace;
     /*bottom: 0;*/
