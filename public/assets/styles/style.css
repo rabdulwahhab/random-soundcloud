@@ -127,11 +127,6 @@ button:active {
         max-width: 100%;
     }
 
-    iframe#player {
-        min-width: 350px;
-
-    }
-
     .pageTitle {
         max-width: 100%;
         margin-bottom: 7%;
@@ -142,7 +137,7 @@ button:active {
     }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 760px) {
     .pageTitle {
         margin-bottom: 15%;
         font-size: 35px;
@@ -151,6 +146,10 @@ button:active {
     .bg-select {
         width: 30%;
         display: none;
+    }
+
+    iframe#player {
+        max-width: 330px;
     }
 }
 
@@ -163,12 +162,12 @@ button:active {
         max-width: 100%;
     }
 
-    iframe#player {
-        min-width: 320px;
-    }
-
     .bg-select {
         width: 30%;
         display: none;
+    }
+
+    iframe#player {
+        max-width: 320px;
     }
 }
