@@ -1,5 +1,4 @@
 body {
-    /*background-image: url("../images/cozy.jpg");*/
     background-color: white;
     background-repeat: no-repeat;
     -o-background-size: cover;
@@ -45,8 +44,6 @@ img {
     font-size: 55px;
     margin-bottom: 7%;
     text-shadow: 25px 25px #c8c7c7;
-    /* margin-left: 2%;
-    margin-right: 1%; */
     text-align: left;
 }
 
@@ -58,14 +55,6 @@ h1:hover {
     width: 10%;
     position: relative;
     font-family: 'DM Mono', monospace;
-    /*bottom: 0;*/
-    /*right: 0;*/
-    /*margin-top: 8%;*/
-    /*position: fixed;*/
-    /*bottom: 0px;*/
-    /*right: 4px;*/
-    /*width: 300px;*/
-    /*border: 3px solid #73AD21;*/
 }
 
 .footer {

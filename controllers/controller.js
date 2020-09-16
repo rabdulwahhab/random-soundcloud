@@ -8,7 +8,7 @@ const logger = util.logger;
 
 // Globals
 const MAX_DURATION = 7; // in minutes
-const MAX_PLAYS = 200000;
+const MAX_PLAYS = 500000;
 
 // function logger(msg) {
 //     console.log(msg);
@@ -46,7 +46,7 @@ module.exports = function (app) {
   });
 
   app.get('/play', function (req, res) {
-    logger(req.query.url);
+    //logger(req.query.url);
     res.writeHead(200, {'Content-Type': 'audio/mpeg'});
     scdl.downloadFormat(req.query.url, 'audio/mpeg')
         .then(stream => {
@@ -64,7 +64,7 @@ module.exports = function (app) {
     // Number of bulk requests to make
     const NUM_REQUESTS = req.query.numRequests;
     const color_code = "#ff5500";
-    logger("NUM_REQ: " + NUM_REQUESTS);
+    //logger("NUM_REQ: " + NUM_REQUESTS);
     let pot_tracks = [];
     for (let j = 0; j < NUM_REQUESTS; ++j) {
       pot_tracks.push(getId());
@@ -91,10 +91,10 @@ module.exports = function (app) {
               // req.headers.referer.concat("play?url=").concat(obj.permalink_url)
             };
           })
-          logger("TRACK OBJS ------");
-          logger(trackObjs);
+          //logger("TRACK OBJS ------");
+          //logger(trackObjs);
           res.json({tracks: trackObjs});
-          logger("SUCCESS");
+          //logger("SUCCESS");
         })
         .catch(result => logger(result));
   });
