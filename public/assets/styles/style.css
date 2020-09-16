@@ -1,8 +1,11 @@
 body {
-    /*background-image: url("../images/cozycat.jpg");*/
+    /*background-image: url("../images/cozy.jpg");*/
     background-color: white;
     background-repeat: no-repeat;
-    background-size: 100%;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size:cover;
+    background-size: cover;
 }
 
 .center {
