@@ -148,27 +148,27 @@ $(document).ready(() => {
     bg.css("background-color", "white");
   });
   $("#cozy").on("click tap", () => {
-    bg.css("background-image", "url('../assets/images/cozy.jpg')");
+    bg.css("background-image", "url(../assets/images/cozy.jpg)");
     bg.css("background-position", "initial");
   });
   $("#cubicle").on("click tap", () => {
-    bg.css("background-image", "url('../assets/images/cubicle.jpg')");
+    bg.css("background-image", "url(../assets/images/cubicle.jpg)");
     bg.css("background-position", "center center");
   });
   $("#wealth").on("click tap", () => {
-    bg.css("background-image", "url('../assets/images/wealth.jpg')");
+    bg.css("background-image", "url(../assets/images/wealth.jpg)");
     bg.css("background-position", "initial");
   });
   $("#clouds").on("click tap", () => {
-    bg.css("background-image", "url('../assets/images/clouds.jpg')");
+    bg.css("background-image", "url(../assets/images/clouds.jpg)");
     bg.css("background-position", "center center");
   });
   $("#water_cycle").on("click tap", () => {
-    bg.css("background-image", "url('../assets/images/water_cycle.jpg')");
+    bg.css("background-image", "url(../assets/images/water_cycle.jpg)");
     bg.css("background-position", "initial");
   });
   $("#tropical").on("click tap", () => {
-    bg.css("background-image", "url('../assets/images/tropical.jpg')");
+    bg.css("background-image", "url(../assets/images/tropical.jpg)");
     bg.css("background-position", "center center");
   });
   $("#brown").on("click tap", () => {
@@ -176,11 +176,11 @@ $(document).ready(() => {
     bg.css("background-color", "#7B3933");
   });
   $("#corduroy1").on("click tap", () => {
-    bg.css("background-image", "url('../assets/images/corduroy1.jpg')")
+    bg.css("background-image", "url(../assets/images/corduroy1.jpg)");
     bg.css("background-position", "initial");
   });
   $("#corduroy2").on("click tap", () => {
-    bg.css("background-image", "url('../assets/images/corduroy2.jpg')");
+    bg.css("background-image", "url(../assets/images/corduroy2.jpg)");
     bg.css("background-position", "center center");
   });
 
