@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var compression = require('compression');
 var controller = require('./controllers/controller'); // store function from module
+var port = process.env.PORT || 80;
 
 
 // setup ejs template engine
@@ -16,5 +17,5 @@ app.use(compression()); // compress data on all routes
 controller(app);
 
 // listen to port
-app.listen(8000);
-console.log("Live on port 8000");
+app.listen(port);
+console.log("Live on port: " + port);
