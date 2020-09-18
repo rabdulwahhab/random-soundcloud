@@ -81,7 +81,7 @@ module.exports = function (app) {
             stream = stream.concat(obj.id);
             stream = stream.concat("&color=");
             stream = stream.concat(encodeURIComponent(color_code));
-            stream = stream.concat("&auto_play=true&hide_related=true&show_comments=true&show_user=true &show_reposts=false&show_teaser=false&visual=true");
+            stream = stream.concat("&auto_play=true&download=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&show_teaser=false&visual=true");
             return {
               title: obj.title,
               artist: obj.user.username,
