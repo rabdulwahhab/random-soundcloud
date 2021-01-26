@@ -16,5 +16,6 @@ app.use(compression()); // compress data on all routes
 controller(app);
 
 // listen to port
-app.listen(8000);
-console.log("Live on port 8000");
+var port = 3000;
+app.listen(port);
+console.log(`Live on port ${port}`);
